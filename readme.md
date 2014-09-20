@@ -1,0 +1,1 @@
+This website seeks to become a comprehensive listing of all instances of times when Filipinos overreact to criticism (both deserved and undeserved) by descending upon the subject like a swarm of angry bees and inflicting their wrath through letters, blogs, Photoshop contests, and other zany means of reaction. Anyone is welcome to contribute.
