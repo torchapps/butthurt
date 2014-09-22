@@ -1,0 +1,22 @@
+<html>
+
+	<script type="text/javascript" src="papaparse.min.js"></script>
+	<script type="text/javascript">
+
+		Papa.parse("data.csv", {
+			download: true,
+			complete: function(results) {
+				var labels = results.data.shift();
+				var out = results.data.map(function (r){
+					var o = {};
+					for (var i in r) o[labels[i]] = r[i];
+					o.date = new Date(o.date);
+					return o;
+				});
+				console.log(out);
+			}
+		});
+
+	</script>
+
+</html>
