@@ -1,0 +1,22 @@
+{
+  "name": "Butthurt",
+  "version": "0.0.1",
+  "homepage": "https://github.com/frohawkph/butthurt",
+  "authors": [
+    "Pepe Bawagan and Levi Tan Ong"
+  ],
+  "description": "A comprehensive listing of all instances of Filipinos overreacting to criticism by depescending upon the subject like a swarm of angry bees.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.4.1",
+    "core-elements": "Polymer/core-elements#~0.4.1",
+    "paper-elements": "Polymer/paper-elements#~0.4.1"
+  }
+}
