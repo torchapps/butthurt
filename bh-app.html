@@ -12,9 +12,20 @@
         position: absolute;
         left: 50%;
         margin-left: -16px;
+        z-index: 1;
       }
       .buttlist {
         align-items: center;
+      }
+      .line-container {
+        align-items: center;
+      }
+      .line {
+        position: relative;
+        height: 100%;
+        width: 4px;
+        background-color: blue;
+        z-index: 0;
       }
     </style>
     <core-ajax
@@ -36,6 +47,9 @@
           src="{{instance.src}}">
         </bh-instance>
       </template>
+    </div>
+    <div class="line-container" fit layout vertical>
+      <div class="line"></div>
     </div>
   </template>
   <script>
