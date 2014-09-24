@@ -1,0 +1,50 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/core-ajax/core-ajax.html">
+
+<polymer-element name="bh-app" attributes="buttList">
+  <template>
+    <style>
+
+    </style>
+    <core-ajax
+    auto
+    url="data.csv"
+    handleAs="text"
+    on-core-error="{{dataErrorHandler}}"
+    on-core-response="{{dataHandler}}"
+    ></core-ajax>
+
+    {{daysSinceLastButthurt(buttList)}} days since last butthurt
+  </template>
+  <script>
+    Polymer("bh-app", {
+      created: function(){
+        this.buttList = [];
+      },
+      latestDate: function(buttList){
+        var date = _.chain(buttList)
+          .sortBy("date")
+          .last()
+          .value();
+        return date ? date.date : null;
+      }, 
+      daysSinceLastButthurt: function(buttList){
+        return Math.floor((new Date() - this.latestDate(buttList)) / 1000 / 60 / 60 / 24);
+      },
+      dataHandler: function(r, d){
+        var results = Papa.parse(d.xhr.response);
+        var labels = results.data.shift();
+        this.buttList = results.data.map(function (r){
+          var o = {};
+          for (var i in r) o[labels[i]] = r[i];
+          o.date = new Date(o.date);
+          return o;
+        });
+        console.log(this.buttList);
+      },
+      dataErrorHandler: function(r){
+        console.log(r);
+      } 
+    });
+  </script>
+</polymer-element>

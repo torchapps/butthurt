@@ -1,22 +1,18 @@
+<!doctype html>
 <html>
+	<head>
+		<script src="bower_components/platform/platform.js"></script>
+		<script src="bower_components/underscore/underscore-min.js"></script>
+		<script type="text/javascript" src="papaparse.min.js"></script>
 
-	<script type="text/javascript" src="papaparse.min.js"></script>
-	<script type="text/javascript">
+		<link rel="import" href="bh-app.html">
+	</head>
 
-		Papa.parse("data.csv", {
-			download: true,
-			complete: function(results) {
-				var labels = results.data.shift();
-				var out = results.data.map(function (r){
-					var o = {};
-					for (var i in r) o[labels[i]] = r[i];
-					o.date = new Date(o.date);
-					return o;
-				});
-				console.log(out);
-			}
-		});
+	<body>
+		<bh-app></bh-app>
 
-	</script>
+		<script type="text/javascript">
 
+		</script>
+	</body>
 </html>
