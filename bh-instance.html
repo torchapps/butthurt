@@ -1,0 +1,25 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<polymer-element name="bh-instance" attributes="date desc src">
+  <template>
+    <style>
+      .circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: blue;
+      }
+    </style>
+<!--     {{date}}
+    {{desc}}
+    {{src}} -->
+    <div class="circle">
+      {{date}}
+    </div>
+  </template>
+  <script>
+    Polymer("bh-instance", {
+      
+    });
+  </script>
+</polymer-element>

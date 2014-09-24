@@ -1,10 +1,21 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
 <link rel="import" href="bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="bh-instance.html">
 
 <polymer-element name="bh-app" attributes="buttList">
   <template>
     <style>
-
+      :host {
+        font-family: Helvetica;
+      }
+      bh-instance {
+        position: absolute;
+        left: 50%;
+        margin-left: -16px;
+      }
+      .buttlist {
+        align-items: center;
+      }
     </style>
     <core-ajax
     auto
@@ -14,7 +25,18 @@
     on-core-response="{{dataHandler}}"
     ></core-ajax>
 
-    {{daysSinceLastButthurt(buttList)}} days since last butthurt
+    <div class="buttlist" layout vertical>
+      {{daysSinceDate(latestDate(buttList))}} days since last butthurt
+
+      <template repeat="{{instance in buttList}}">
+        <bh-instance 
+          style="top: {{daysSinceDate(instance.date) * 20}}px"
+          date="{{instance.date}}" 
+          desc="{{instance.desc}}" 
+          src="{{instance.src}}">
+        </bh-instance>
+      </template>
+    </div>
   </template>
   <script>
     Polymer("bh-app", {
@@ -28,8 +50,8 @@
           .value();
         return date ? date.date : null;
       }, 
-      daysSinceLastButthurt: function(buttList){
-        return Math.floor((new Date() - this.latestDate(buttList)) / 1000 / 60 / 60 / 24);
+      daysSinceDate: function(butthurtDate){
+        return Math.floor((new Date() - butthurtDate) / 1000 / 60 / 60 / 24);
       },
       dataHandler: function(r, d){
         var results = Papa.parse(d.xhr.response);
