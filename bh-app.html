@@ -10,20 +10,23 @@
         font-family: Helvetica;
       }
       bh-instance {
-        position: absolute;
-        left: 50%;
-        margin-left: -24px;
+        /*position: absolute;*/
+        /*left: 50%;*/
+        /*margin-left: -24px;*/
         z-index: 1;
+      }
+      bh-instance + bh-instance {
+        margin-top: 20px;
       }
       .line-container {
         align-items: center;
       }
       .line {
-        position: absolute;
+        /*position: absolute;*/
         /*height: 100%;*/
-        left: 50%;
-        margin-left: -2px;
-        width: 4px;
+        /*left: 50%;*/
+        /*margin-left: -2px;*/
+        width: 2px;
         background-color: #333;
         z-index: 0;
       }
@@ -46,7 +49,7 @@
         <h1>{{daysSinceDate(latestDate(buttList))}} days</h1>
         <p>since last butthurt</p>
       </div>
-      <div layout vertical center>
+      <div layout vertical center reverse>
         <template repeat="{{instance in buttList}}">
           <bh-instance 
             style="top: {{daysSinceDate(instance.date) * 20}}px"
@@ -57,9 +60,9 @@
         </template>
       </div>
     </div>
-    <div class="line-container">
+<!--     <div class="line-container" vertical layout center>
       <div class="line" style="height: {{totalDays(buttList) * 20}}px"></div>
-    </div>
+    </div> -->
   </template>
   <script>
     Polymer("bh-app", {

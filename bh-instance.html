@@ -3,24 +3,41 @@
 <polymer-element name="bh-instance" attributes="date desc src">
   <template>
     <style>
-      .circle {
+      .container {
+        position: relative;
+      }
+      .date-circle {
         width: 48px;
         height: 48px;
         border-radius: 50%;
         background-color: #333;
         color: white;
+        margin-right: 10px;
       }
       .month {
         text-transform: uppercase;
         font-size: 10px;
       }
+      .info {
+        /*position: absolute;*/
+        width: 256px;
+        /*left: 68px;*/
+        /*top: 10px;*/
+      }
     </style>
 <!--     {{date}}
     {{desc}}
     {{src}} -->
-    <div class="circle" layout vertical center center-justified>
-      <div class="month">{{getMonth(date)}}</div>
-      <div>{{getDate(date)}}</div>
+    <div class="container" horizontal layout>
+      <div class="date-circle" layout vertical center center-justified>
+        <div class="month">{{getMonth(date)}}</div>
+        <div>{{getDate(date)}}</div>
+      </div>
+
+      <div class="info">
+        
+        <a href="{{src}}"><p>{{desc}}</p></a>
+      </div>
     </div>
   </template>
   <script>
