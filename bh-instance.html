@@ -4,22 +4,37 @@
   <template>
     <style>
       .circle {
-        width: 32px;
-        height: 32px;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
-        background-color: blue;
+        background-color: #333;
+        color: white;
+      }
+      .month {
+        text-transform: uppercase;
+        font-size: 10px;
       }
     </style>
 <!--     {{date}}
     {{desc}}
     {{src}} -->
-    <div class="circle">
-      {{date}}
+    <div class="circle" layout vertical center center-justified>
+      <div class="month">{{getMonth(date)}}</div>
+      <div>{{getDate(date)}}</div>
     </div>
   </template>
   <script>
     Polymer("bh-instance", {
-      
+      created: function(){
+        this.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      },
+      getMonth: function(date){
+        // console.log(date.getMonth());
+        return this.months[date.getMonth()];
+      },
+      getDate: function(date){
+        return date.getDate();
+      }
     });
   </script>
 </polymer-element>
