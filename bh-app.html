@@ -22,11 +22,12 @@
         align-items: center;
       }
       .line {
-        /*position: absolute;*/
+        position: absolute;
         /*height: 100%;*/
         /*left: 50%;*/
         /*margin-left: -2px;*/
         width: 2px;
+        height: 100%;
         background-color: #333;
         z-index: 0;
       }
@@ -49,16 +50,17 @@
         <h1>{{daysSinceDate(latestDate(buttList))}} days</h1>
         <p>since last butthurt</p>
       </div>
-      <div layout vertical center reverse>
+      <div layout vertical center>
         <template repeat="{{instance in buttList}}">
           <bh-instance 
-            style="top: {{daysSinceDate(instance.date) * 20}}px"
+            style="min-height: {{toDays(instance.interval) * 20}}px"
             date="{{instance.date}}" 
             desc="{{instance.desc}}" 
             src="{{instance.src}}">
           </bh-instance>
         </template>
       </div>
+      <div class="line"></div>
     </div>
 <!--     <div class="line-container" vertical layout center>
       <div class="line" style="height: {{totalDays(buttList) * 20}}px"></div>
@@ -69,6 +71,11 @@
       created: function(){
         this.buttList = [];
       },
+      // deltaDate: function(buttList){
+      //   return _.tail(buttList).map(function(bh, index){
+      //     return bh.date - buttList[index].date;
+      //   })
+      // },
       latestDate: function(buttList){
         var date = _.chain(buttList)
           .sortBy("date")
@@ -76,18 +83,33 @@
           .value();
         return date ? date.date : null;
       }, 
+      toDays: function(date){
+        //date is in milliseconds
+        return date / 1000 / 60 / 60 / 24;
+      },
       daysSinceDate: function(butthurtDate){
-        return Math.floor((new Date() - butthurtDate) / 1000 / 60 / 60 / 24);
+        // return Math.floor((new Date() - butthurtDate) / 1000 / 60 / 60 / 24);
+        return this.dateInterval(new Date(), butthurtDate);
+      },
+      dateInterval: function(newDate, oldDate){
+        return Math.floor(this.toDays(newDate - oldDate));
       },
       dataHandler: function(r, d){
         var results = Papa.parse(d.xhr.response);
         var labels = results.data.shift();
-        this.buttList = results.data.map(function (r){
+        this.buttList = results.data.map(function (r, index){
           var o = {};
           for (var i in r) o[labels[i]] = r[i];
           o.date = new Date(o.date);
+
           return o;
-        });
+        }).reverse();
+
+        _.tail(this.buttList).forEach(function(bh, index){
+          // console.log(this.buttList);
+          bh.interval = this.buttList[index].date - bh.date;
+        }.bind(this));
+        
         console.log(this.buttList);
       },
       totalDays: function(list){

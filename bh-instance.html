@@ -3,8 +3,12 @@
 <polymer-element name="bh-instance" attributes="date desc src">
   <template>
     <style>
+      :host {
+        position: relative;
+      }
       .container {
         position: relative;
+        z-index: 1;
       }
       .date-circle {
         width: 48px;
@@ -24,6 +28,15 @@
         /*left: 68px;*/
         /*top: 10px;*/
       }
+      .line {
+        position: absolute;
+        z-index: 0;
+        top: 0px;
+        bottom: -20px;
+        left: 24px;
+        width: 2px;
+        background-color: #333;
+      }
     </style>
 <!--     {{date}}
     {{desc}}
@@ -39,6 +52,8 @@
         <a href="{{src}}"><p>{{desc}}</p></a>
       </div>
     </div>
+
+    <div class="line"></div>
   </template>
   <script>
     Polymer("bh-instance", {
