@@ -21,8 +21,10 @@
         align-items: center;
       }
       .line {
-        position: relative;
-        height: 100%;
+        position: absolute;
+        /*height: 100%;*/
+        left: 50%;
+        margin-left: -2px;
         width: 4px;
         background-color: blue;
         z-index: 0;
@@ -37,7 +39,7 @@
     ></core-ajax>
 
     <div class="buttlist" layout vertical>
-      {{daysSinceDate(latestDate(buttList))}} days since last butthurt
+      <div>{{daysSinceDate(latestDate(buttList))}} days since last butthurt</div>
 
       <template repeat="{{instance in buttList}}">
         <bh-instance 
@@ -48,8 +50,8 @@
         </bh-instance>
       </template>
     </div>
-    <div class="line-container" fit layout vertical>
-      <div class="line"></div>
+    <div class="line-container">
+      <div class="line" style="height: {{totalDays(buttList) * 20}}px"></div>
     </div>
   </template>
   <script>
@@ -77,6 +79,13 @@
           return o;
         });
         console.log(this.buttList);
+      },
+      totalDays: function(list){
+        if (list.length) {
+          return this.daysSinceDate(_.head(list).date);
+        } else {
+          return 0;
+        }
       },
       dataErrorHandler: function(r){
         console.log(r);
