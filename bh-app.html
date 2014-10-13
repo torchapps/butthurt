@@ -14,9 +14,6 @@
         margin-left: -16px;
         z-index: 1;
       }
-      .buttlist {
-        align-items: center;
-      }
       .line-container {
         align-items: center;
       }
@@ -29,6 +26,11 @@
         background-color: blue;
         z-index: 0;
       }
+      .banner {
+        background-color: #333;
+        text-align: center;
+        color: white;
+      }
     </style>
     <core-ajax
     auto
@@ -39,16 +41,20 @@
     ></core-ajax>
 
     <div class="buttlist" layout vertical>
-      <div>{{daysSinceDate(latestDate(buttList))}} days since last butthurt</div>
-
-      <template repeat="{{instance in buttList}}">
-        <bh-instance 
-          style="top: {{daysSinceDate(instance.date) * 20}}px"
-          date="{{instance.date}}" 
-          desc="{{instance.desc}}" 
-          src="{{instance.src}}">
-        </bh-instance>
-      </template>
+      <div class="banner">
+        <h1>{{daysSinceDate(latestDate(buttList))}} days</h1>
+        <p>since last butthurt</p>
+      </div>
+      <div layout vertical center>
+        <template repeat="{{instance in buttList}}">
+          <bh-instance 
+            style="top: {{daysSinceDate(instance.date) * 20}}px"
+            date="{{instance.date}}" 
+            desc="{{instance.desc}}" 
+            src="{{instance.src}}">
+          </bh-instance>
+        </template>
+      </div>
     </div>
     <div class="line-container">
       <div class="line" style="height: {{totalDays(buttList) * 20}}px"></div>
