@@ -85,27 +85,40 @@
       //     return bh.date - buttList[index].date;
       //   })
       // },
+      // scrollHandler: function(e){
+      //   // console.log(e);
+      //   var trigger = _.throttle(function(){
+      //     this.selectedInstance = this.findButthurtIndexFromScroll();
+      //   }.bind(this), 1000, {leading: false});
+      //   trigger();
+      // },
       animateScroll: function(loc){
         // console.log(this.$.scrollpanel.scroller);
         $(this.$.scrollpanel.scroller).animate({ scrollTop: loc + "px" });
       },
       nextHandler: function(e){
+        this.selectedInstance = this.findButthurtIndexFromScroll();
         if (this.selectedInstance < this.buttList.length - 1) {
-          this.selectedInstance = this.findButthurtIndexFromScroll();
           this.selectedInstance++;
         }
       },
       prevHandler: function(e){
+        this.selectedInstance = this.findButthurtIndexFromScroll();
         if (this.selectedInstance > 0) {
-          this.selectedInstance = this.findButthurtIndexFromScroll();
           this.selectedInstance--;
         }
       },
       firstHandler: function(e){
-        this.selectedInstance = 0;
+        this.selectedInstance = this.findButthurtIndexFromScroll();
+        // this.async(function(){
+          this.selectedInstance = 0;
+        // })
       },
       lastHandler: function(e){
-        this.selectedInstance = this.buttList.length - 1;
+        this.selectedInstance = this.findButthurtIndexFromScroll();
+        // this.async(function(){
+          this.selectedInstance = this.buttList.length - 1;
+        // })
       },
       keyHandler: function(e){
         var keysPressed = function(keys){
