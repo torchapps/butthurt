@@ -2,38 +2,30 @@
 <link rel="import" href="bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="bower_components/core-style/core-style.html">
 <link rel="import" href="bower_components/core-selector/core-selector.html">
+<link rel="import" href="bower_components/core-icons/core-icons.html">
+<link rel="import" href="bower_components/core-icons/hardware-icons.html">
+<link rel="import" href="bower_components/core-icons/av-icons.html">
+<link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="bh-instance.html">
 
-<polymer-element name="bh-app" attributes="buttList" autofocus on-keydown="{{keyHandler}}">
+<polymer-element name="bh-app" attributes="buttList" autofocus fit vertical layout on-keydown="{{keyHandler}}">
   <template>
     <style>
       :host {
         font-family: Helvetica;
       }
-      bh-instance {
-        /*position: absolute;*/
-        /*left: 50%;*/
-        /*margin-left: -24px;*/
-        z-index: 1;
-      }
-/*      bh-instance + bh-instance {
-        margin-top: 20px;
-      }*/
       .line-container {
         align-items: center;
       }
       .banner {
-        background-color: #333;
+        background-color: #870E49;
         text-align: center;
         color: white;
       }
-/*      bh-instance.core-selected {
-        background-color: black;
-      }*/
       #pagecontrols {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
+        background-color: #870E49;
+        color: white;
       }
     </style>
 
@@ -46,24 +38,29 @@
     ></core-ajax>
 
 
-    <div class="buttlist" layout vertical>
-      <div class="banner">
-        <h1>{{daysSinceDate(latestDate(buttList))}} days</h1>
-        <p>since last butthurt</p>
+    <div class="buttlist" layout vertical flex>
+      <core-header-panel id="scrollpanel" mode="scroll" flex>
+        <div class="banner core-header">
+          <h1>{{daysSinceDate(latestDate(buttList))}} days</h1>
+          <p>since last butthurt</p>
+        </div>
+        <core-selector fit id="list" layout vertical center selected="{{selectedInstance}}" on-core-select="{{selectionChangedHandler}}">
+          <template repeat="{{instance in buttList}}">
+            <bh-instance 
+              style="min-height: {{toDays(instance.interval) * 20}}px"
+              date="{{instance.date}}" 
+              desc="{{instance.desc}}" 
+              src="{{instance.src}}">
+            </bh-instance>
+          </template>
+        </core-selector>
+      </core-header-panel>
+      <div id="pagecontrols" horizontal layout center-justified>
+        <paper-icon-button icon="av:fast-rewind" on-tap="{{firstHandler}}"></paper-icon-button>
+        <paper-icon-button icon="av:skip-previous" on-tap="{{prevHandler}}"></paper-icon-button>
+        <paper-icon-button icon="av:skip-next" on-tap="{{nextHandler}}"></paper-icon-button>
+        <paper-icon-button icon="av:fast-forward" on-tap="{{lastHandler}}"></paper-icon-button>
       </div>
-      <core-selector id="list" layout vertical center selected="{{selectedInstance}}" on-core-select="{{selectionChangedHandler}}">
-        <template repeat="{{instance in buttList}}">
-          <bh-instance 
-            style="min-height: {{toDays(instance.interval) * 20}}px"
-            date="{{instance.date}}" 
-            desc="{{instance.desc}}" 
-            src="{{instance.src}}">
-          </bh-instance>
-        </template>
-      </core-selector>
-<!--       <div id="pagecontrols" vertical layout>
-
-      </div> -->
     </div>
 
   </template>
@@ -74,6 +71,9 @@
         this.selectedInstance = 0;
         this.tabIndex = 0;
         this.cachedY = 0; // needed to prevent browser from scrolling to previously selected instance before scrolling to selected instance.
+        // this.focus();
+      },
+      ready: function(){
         this.focus();
       },
       // deltaDate: function(buttList){
@@ -81,24 +81,44 @@
       //     return bh.date - buttList[index].date;
       //   })
       // },
+      animateScroll: function(loc){
+        // console.log(this.$.scrollpanel.scroller);
+        $(this.$.scrollpanel.scroller).animate({ scrollTop: loc + "px" });
+      },
+      nextHandler: function(e){
+        if (this.selectedInstance < this.buttList.length - 1) {
+          this.selectedInstance = this.findButthurtIndexFromScroll();
+          this.selectedInstance++;
+        }
+      },
+      prevHandler: function(e){
+        if (this.selectedInstance > 0) {
+          this.selectedInstance = this.findButthurtIndexFromScroll();
+          this.selectedInstance--;
+        }
+      },
+      firstHandler: function(e){
+        this.selectedInstance = 0;
+      },
+      lastHandler: function(e){
+        this.selectedInstance = this.buttList.length - 1;
+      },
       keyHandler: function(e){
         var keysPressed = function(keys){
           return _.contains(keys, e.keyCode);
         }
         if(keysPressed([32, 37, 38, 39, 40])) {
           e.preventDefault();
-          this.selectedInstance = this.findButthurtIndexFromScroll();
         }
+
         var nextKeys = [bh.arrowKeys.RIGHT, bh.arrowKeys.DOWN];
         var prevKeys = [bh.arrowKeys.LEFT, bh.arrowKeys.UP];
 
-        if (keysPressed(nextKeys) && this.selectedInstance < this.buttList.length - 1) {
+        if (keysPressed(nextKeys)) {
+          this.nextHandler();
 
-          this.selectedInstance++;
-
-        } else if (keysPressed(prevKeys) && this.selectedInstance > 0) {
-
-          this.selectedInstance--;
+        } else if (keysPressed(prevKeys)) {
+          this.prevHandler();
 
         }
       },
@@ -109,11 +129,11 @@
         var y = e.detail.item.offsetTop;
         if (this.cachedY != y) {
           this.cachedY = y;
-          animateScroll(y);
+          this.animateScroll(y);
         }
       },
       findButthurtIndexFromScroll: function(){
-        var y = document.body.scrollTop;
+        var y = this.$.scrollpanel.scroller.scrollTop;
         var butthurtIndex = 0;
         _.chain(this.$.list.children)
           .filter(function(instance){
