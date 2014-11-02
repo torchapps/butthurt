@@ -7,6 +7,7 @@
 <link rel="import" href="bower_components/core-icons/av-icons.html">
 <link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
 <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="bh-instance.html">
 
 <polymer-element name="bh-app" attributes="buttList" autofocus fit vertical layout on-keydown="{{keyHandler}}">
@@ -26,6 +27,9 @@
       #pagecontrols {
         background-color: #870E49;
         color: white;
+      }
+      #list {
+        z-index: 0;
       }
     </style>
 
@@ -57,8 +61,8 @@
       </core-header-panel>
       <div id="pagecontrols" horizontal layout center-justified>
         <paper-icon-button icon="av:fast-rewind" on-tap="{{firstHandler}}"></paper-icon-button>
-        <paper-icon-button icon="av:skip-previous" on-tap="{{prevHandler}}"></paper-icon-button>
-        <paper-icon-button icon="av:skip-next" on-tap="{{nextHandler}}"></paper-icon-button>
+        <paper-icon-button icon="hardware:keyboard-arrow-up" on-tap="{{prevHandler}}"></paper-icon-button>
+        <paper-icon-button icon="hardware:keyboard-arrow-down" on-tap="{{nextHandler}}"></paper-icon-button>
         <paper-icon-button icon="av:fast-forward" on-tap="{{lastHandler}}"></paper-icon-button>
       </div>
     </div>
