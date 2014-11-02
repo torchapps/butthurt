@@ -3,6 +3,7 @@
 	<head>
 		<script src="bower_components/platform/platform.js"></script>
 		<script src="bower_components/underscore/underscore-min.js"></script>
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="papaparse.min.js"></script>
 
 		<link rel="import" href="bh-app.html">
@@ -18,6 +19,18 @@
 		<bh-app></bh-app>
 
 		<script type="text/javascript">
+			function animateScroll(loc){
+				$("html, body").animate({ scrollTop: loc + "px" });
+			}
+
+			var bh = {
+				arrowKeys: {
+					LEFT: 37,
+					UP: 38,
+					RIGHT: 39,
+					DOWN: 40
+				}
+			}
 
 		</script>
 	</body>

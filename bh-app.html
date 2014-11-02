@@ -1,9 +1,10 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
 <link rel="import" href="bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="bower_components/core-style/core-style.html">
+<link rel="import" href="bower_components/core-selector/core-selector.html">
 <link rel="import" href="bh-instance.html">
 
-<polymer-element name="bh-app" attributes="buttList">
+<polymer-element name="bh-app" attributes="buttList" autofocus on-keydown="{{keyHandler}}">
   <template>
     <style>
       :host {
@@ -26,7 +27,16 @@
         text-align: center;
         color: white;
       }
+      bh-instance.core-selected {
+        background-color: black;
+      }
+      #pagecontrols {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+      }
     </style>
+
     <core-ajax
     auto
     url="data.csv"
@@ -35,12 +45,13 @@
     on-core-response="{{dataHandler}}"
     ></core-ajax>
 
+
     <div class="buttlist" layout vertical>
       <div class="banner">
         <h1>{{daysSinceDate(latestDate(buttList))}} days</h1>
         <p>since last butthurt</p>
       </div>
-      <div layout vertical center>
+      <core-selector id="list" layout vertical center selected="{{selectedInstance}}" on-core-select="{{selectionChangedHandler}}">
         <template repeat="{{instance in buttList}}">
           <bh-instance 
             style="min-height: {{toDays(instance.interval) * 20}}px"
@@ -49,22 +60,84 @@
             src="{{instance.src}}">
           </bh-instance>
         </template>
-      </div>
+      </core-selector>
+<!--       <div id="pagecontrols" vertical layout>
+
+      </div> -->
     </div>
-<!--     <div class="line-container" vertical layout center>
-      <div class="line" style="height: {{totalDays(buttList) * 20}}px"></div>
-    </div> -->
+
   </template>
   <script>
     Polymer("bh-app", {
       created: function(){
         this.buttList = [];
+        this.selectedInstance = 0;
+        this.tabIndex = 0;
+        this.cachedY = 0; // needed to prevent browser from scrolling to previously selected instance before scrolling to selected instance.
+        this.focus();
       },
       // deltaDate: function(buttList){
       //   return _.tail(buttList).map(function(bh, index){
       //     return bh.date - buttList[index].date;
       //   })
       // },
+      keyHandler: function(e){
+        var keysPressed = function(keys){
+          return _.contains(keys, e.keyCode);
+        }
+        if(keysPressed([32, 37, 38, 39, 40])) {
+          e.preventDefault();
+          this.selectedInstance = this.findButthurtIndexFromScroll();
+        }
+        var nextKeys = [bh.arrowKeys.RIGHT, bh.arrowKeys.DOWN];
+        var prevKeys = [bh.arrowKeys.LEFT, bh.arrowKeys.UP];
+
+        if (keysPressed(nextKeys) && this.selectedInstance < this.buttList.length - 1) {
+
+          this.selectedInstance++;
+
+        } else if (keysPressed(prevKeys) && this.selectedInstance > 0) {
+
+          this.selectedInstance--;
+
+        }
+      },
+      selectionChangedHandler: function(e){
+        // selection changed.
+        // animate scroll to selected object
+        // we already know the element that is selected
+        var y = e.detail.item.offsetTop;
+        if (this.cachedY != y) {
+          this.cachedY = y;
+          animateScroll(y);
+        }
+      },
+      findButthurtIndexFromScroll: function(){
+        var y = document.body.scrollTop;
+        var butthurtIndex;
+        _.chain(this.$.list.children)
+          .filter(function(instance){
+            return instance.tagName === "BH-INSTANCE";
+          })
+          .find(function(instance, index, list){
+            // var height = instance.offsetHeight;
+            var top = instance.offsetTop;
+            // console.log(list[index + 1].offsetTop);
+            if (list[index + 1]) {
+              var nextTop = list[index + 1].offsetTop;
+            } else {
+              var nextTop = instance.offsetHeight;
+            }
+
+            if (y >= top && y < nextTop) {
+              butthurtIndex = index;
+            }
+
+            return y >= top && y < nextTop;
+          })
+          .value();
+        return butthurtIndex;
+      },
       latestDate: function(buttList){
         var date = _.chain(buttList)
           .sortBy("date")
@@ -95,11 +168,9 @@
         }).reverse();
 
         _.tail(this.buttList).forEach(function(bh, index){
-          // console.log(this.buttList);
           bh.interval = this.buttList[index].date - bh.date;
         }.bind(this));
         
-        console.log(this.buttList);
       },
       totalDays: function(list){
         if (list.length) {
