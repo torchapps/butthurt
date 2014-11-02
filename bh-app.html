@@ -159,17 +159,22 @@
       dataHandler: function(r, d){
         var results = Papa.parse(d.xhr.response);
         var labels = results.data.shift();
-        this.buttList = results.data.map(function (r, index){
-          var o = {};
-          for (var i in r) o[labels[i]] = r[i];
-          o.date = new Date(o.date);
-
-          return o;
-        }).reverse();
-
-        _.tail(this.buttList).forEach(function(bh, index){
-          bh.interval = this.buttList[index].date - bh.date;
-        }.bind(this));
+        this.buttList = _.chain(results.data)
+          .map(function (r){
+            var o = {};
+            for (var i in r) o[labels[i]] = r[i];
+            o.date = new Date(o.date);
+            return o;
+          })
+          .forEach(function(r, index, list){
+            if (list[index - 1]) {
+              r.interval = r.date - list[index - 1].date;
+            } else {
+              r.interval = 0;
+            }
+          })
+          .reverse()
+          .value();
         
       },
       totalDays: function(list){
