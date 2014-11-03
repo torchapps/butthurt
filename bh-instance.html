@@ -1,7 +1,7 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
 <link rel="import" href="bh-date-circle.html">
 
-<polymer-element name="bh-instance" attributes="date desc src" horizontal layout start>
+<polymer-element name="bh-instance" attributes="date desc src selected" horizontal layout start>
   <template>
     <style>
       :host {
@@ -11,9 +11,12 @@
         flex-shrink: 0;
         -webkit-flex-shrink: 0;
       }
-      :host(.core-selected) .info {
-        /*box-shadow: 0px 8px 8px rgba(0,0,0,0.2);*/
+/*      :host(.core-selected) .info {
         border-left: 8px solid #870E49;
+      }*/
+      bh-date-circle {
+        transition: all 0.2s;
+        margin-right: 8px;
       }
       .month {
         text-transform: uppercase;
@@ -54,7 +57,7 @@
       </div> -->
     <div class="line"></div>
 
-    <bh-date-circle>
+    <bh-date-circle class="{{selected ? 'large' : ''}}">
       <div class="month">{{getMonth(date)}}</div>
       <div>{{getDate(date)}}</div>
     </bh-date-circle>

@@ -53,6 +53,7 @@
         height: 64px;
         width: 64px;
         margin-right: 0px;
+        color: #870E49;
       }
       .container h1 {
         font-weight: 300;
@@ -61,7 +62,7 @@
       .container .line {
         position: absolute;
         z-index: -1;
-        top: 16px;
+        top: 80px;
         bottom: -20px;
         /*top: 0px;*/
         /*bottom: 0px;*/
@@ -89,7 +90,7 @@
           <div style="position: relative; width: 384px" layout vertical>
             
             <div class="container" horizontal layout flex-start>
-              <bh-date-circle>
+              <bh-date-circle class="outline">
                 Now
               </bh-date-circle>
               <div style="padding: 16px; color: #333;">
@@ -97,7 +98,7 @@
               </div>
               <div class="line"></div>
             </div>
-            <core-selector id="list" layout vertical selected="{{selectedInstance}}" on-core-select="{{selectionChangedHandler}}">
+            <core-selector id="list" layout vertical selected="{{selectedInstance}}" on-core-select="{{selectionChangedHandler}}" selectedProperty="selected">
               <template repeat="{{instance in buttList}}">
                 <bh-instance 
                   style="min-height: {{toDays(instance.interval) * 20}}px"
