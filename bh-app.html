@@ -69,7 +69,7 @@
 
     <div class="buttlist" layout vertical flex>
       <core-header-panel id="scrollpanel" mode="scroll" flex on-scroll="{{scrollHandler}}">
-        <core-toolbar>
+        <core-toolbar style="display: none;">
           <core-icon-button icon="menu"></core-icon-button>
         </core-toolbar>
         <div fit layout vertical center>
@@ -114,6 +114,7 @@
         this.tabIndex = 0;
         this.cachedY = 0; // needed to prevent browser from scrolling to previously selected instance before scrolling to selected instance.
         // this.focus();
+        this.topMargin = 48;
       },
       ready: function(){
         this.focus();
@@ -132,7 +133,7 @@
       },
       animateScroll: function(loc){
         // console.log(this.$.scrollpanel.scroller);
-        $(this.$.scrollpanel.scroller).animate({ scrollTop: loc + "px" });
+        $(this.$.scrollpanel.scroller).animate({ scrollTop: loc - this.topMargin + "px" });
       },
       getInstances: function(){
         return _.filter(this.$.list.children, function(instance){
@@ -198,7 +199,7 @@
         this.animateScroll(instance.offsetTop);
       },
       findButthurtIndexFromScroll: function(){
-        var y = this.$.scrollpanel.scroller.scrollTop;
+        var y = this.$.scrollpanel.scroller.scrollTop + this.topMargin;
         var butthurtIndex = 0;
         _.chain(this.$.list.children)
           .filter(function(instance){
