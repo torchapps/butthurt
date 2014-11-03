@@ -147,33 +147,30 @@
         // console.log(this.$.scrollpanel.scroller);
         $(this.$.scrollpanel.scroller).animate({ scrollTop: loc + "px" });
       },
+      getInstances: function(){
+        return _.filter(this.$.list.children, function(instance){
+          return instance.tagName === "BH-INSTANCE";
+        }.bind(this));
+      },
       nextHandler: function(e){
-        this.selectedInstance = this.findButthurtIndexFromScroll();
         if (this.selectedInstance < this.buttList.length - 1) {
-          this.selectedInstance++;
-          this.animateToSelectedInstance();
+          var target = this.getInstances()[this.findButthurtIndexFromScroll() + 1];
+          this.animateToInstance(target);
         }
       },
       prevHandler: function(e){
-        this.selectedInstance = this.findButthurtIndexFromScroll();
         if (this.selectedInstance > 0) {
-          this.selectedInstance--;
-          this.animateToSelectedInstance();
+          var target = this.getInstances()[this.findButthurtIndexFromScroll() - 1];
+          this.animateToInstance(target);
         }
       },
       firstHandler: function(e){
-        this.selectedInstance = this.findButthurtIndexFromScroll();
-        // this.async(function(){
-          this.selectedInstance = 0;
-          this.animateToSelectedInstance();
-        // })
+        var target = this.getInstances()[0];
+        this.animateToInstance(target);
       },
       lastHandler: function(e){
-        this.selectedInstance = this.findButthurtIndexFromScroll();
-        // this.async(function(){
-          this.selectedInstance = this.buttList.length - 1;
-          this.animateToSelectedInstance();
-        // })
+        var target = _.last(this.getInstances());
+        this.animateToInstance(target);
       },
       keyHandler: function(e){
         var keysPressed = function(keys){
@@ -205,12 +202,13 @@
         //   this.animateScroll(y);
         // }
       },
-      animateToSelectedInstance: function(){
-        var target = _.filter(this.$.list.children, function(instance){
-          return instance.tagName === "BH-INSTANCE";
-        }.bind(this))[this.selectedInstance];
 
-        this.animateScroll(target.offsetTop);
+      animateToInstance: function(instance){
+        // var target = _.filter(this.$.list.children, function(instance){
+        //   return instance.tagName === "BH-INSTANCE";
+        // }.bind(this))[this.selectedInstance];
+
+        this.animateScroll(instance.offsetTop);
       },
       findButthurtIndexFromScroll: function(){
         var y = this.$.scrollpanel.scroller.scrollTop;
