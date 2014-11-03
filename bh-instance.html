@@ -33,15 +33,13 @@
       .section {
         padding: 16px;
       }
-      core-collapse .section {
-        border-top: 1px solid #eee;
-        padding: 12px 16px;
-      }
       a.section {
         display: block;
+        padding: 12px 16px;
         text-decoration: none;
         color: #0074D9;
         text-align: right;
+        border-top: 1px solid #eee;
       }
       a.section:hover {
         background-color: #eee;
@@ -68,12 +66,12 @@
       <div class="section">
         {{desc}}
       </div>
-      <core-collapse id="sourceCollapse" opened="{{sourceOpen || selected}}">
+      <!-- <core-collapse id="sourceCollapse" opened="{{sourceOpen || selected}}"> -->
         <a class="section" href="{{src}}" target="_blank">
           <core-icon icon="link"></core-icon>
           source
         </a>
-      </core-collapse>
+      <!-- </core-collapse> -->
     </div>
       
 
