@@ -23,6 +23,11 @@
         background-color: #870E49;
         text-align: center;
         color: white;
+        height: 128px;
+      }
+      .banner h1, .banner p {
+        font-weight: 300;
+        margin: 10px 0px;
       }
       #pagecontrols {
         background-color: #870E49;
@@ -43,8 +48,8 @@
 
 
     <div class="buttlist" layout vertical flex>
-      <core-header-panel id="scrollpanel" mode="scroll" flex>
-        <div class="banner core-header">
+      <core-header-panel id="scrollpanel" mode="scroll" flex on-scroll="{{scrollHandler}}">
+        <div class="banner core-header" layout vertical center center-justified>
           <h1>{{daysSinceDate(latestDate(buttList))}} days</h1>
           <p>since last butthurt</p>
         </div>
@@ -85,13 +90,13 @@
       //     return bh.date - buttList[index].date;
       //   })
       // },
-      // scrollHandler: function(e){
-      //   // console.log(e);
-      //   var trigger = _.throttle(function(){
-      //     this.selectedInstance = this.findButthurtIndexFromScroll();
-      //   }.bind(this), 1000, {leading: false});
-      //   trigger();
-      // },
+      scrollHandler: function(e){
+        // console.log(e);
+        var trigger = _.throttle(function(){
+          this.selectedInstance = this.findButthurtIndexFromScroll();
+        }.bind(this), 200, {leading: false});
+        trigger();
+      },
       animateScroll: function(loc){
         // console.log(this.$.scrollpanel.scroller);
         $(this.$.scrollpanel.scroller).animate({ scrollTop: loc + "px" });
@@ -100,24 +105,28 @@
         this.selectedInstance = this.findButthurtIndexFromScroll();
         if (this.selectedInstance < this.buttList.length - 1) {
           this.selectedInstance++;
+          this.animateToSelectedInstance();
         }
       },
       prevHandler: function(e){
         this.selectedInstance = this.findButthurtIndexFromScroll();
         if (this.selectedInstance > 0) {
           this.selectedInstance--;
+          this.animateToSelectedInstance();
         }
       },
       firstHandler: function(e){
         this.selectedInstance = this.findButthurtIndexFromScroll();
         // this.async(function(){
           this.selectedInstance = 0;
+          this.animateToSelectedInstance();
         // })
       },
       lastHandler: function(e){
         this.selectedInstance = this.findButthurtIndexFromScroll();
         // this.async(function(){
           this.selectedInstance = this.buttList.length - 1;
+          this.animateToSelectedInstance();
         // })
       },
       keyHandler: function(e){
@@ -143,11 +152,19 @@
         // selection changed.
         // animate scroll to selected object
         // we already know the element that is selected
-        var y = e.detail.item.offsetTop;
-        if (this.cachedY != y) {
-          this.cachedY = y;
-          this.animateScroll(y);
-        }
+
+        // var y = e.detail.item.offsetTop;
+        // if (this.cachedY != y) {
+        //   this.cachedY = y;
+        //   this.animateScroll(y);
+        // }
+      },
+      animateToSelectedInstance: function(){
+        var target = _.filter(this.$.list.children, function(instance){
+          return instance.tagName === "BH-INSTANCE";
+        }.bind(this))[this.selectedInstance];
+
+        this.animateScroll(target.offsetTop);
       },
       findButthurtIndexFromScroll: function(){
         var y = this.$.scrollpanel.scroller.scrollTop;
