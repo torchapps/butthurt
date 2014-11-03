@@ -1,7 +1,10 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/core-collapse/core-collapse.html">
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+<link rel="import" href="bower_components/core-icon/core-icon.html">
 <link rel="import" href="bh-date-circle.html">
 
-<polymer-element name="bh-instance" attributes="date desc src selected" horizontal layout start>
+<polymer-element name="bh-instance" attributes="date desc src selected" horizontal layout start on-mouseover="{{mouseoverHandler}}" on-mouseleave="{{mouseleaveHandler}}">
   <template>
     <style>
       :host {
@@ -11,7 +14,7 @@
         flex-shrink: 0;
         -webkit-flex-shrink: 0;
       }
-/*      :host(.core-selected) .info {
+/*      :host(.core-selected) .card {
         border-left: 8px solid #870E49;
       }*/
       bh-date-circle {
@@ -22,12 +25,11 @@
         text-transform: uppercase;
         font-size: 10px;
       }
-      .info {
+      .card {
         /*position: absolute;*/
         display: block;
         /*width: 256px;*/
         background-color: white;
-        padding: 16px;
         color: #333;
         text-decoration: none;
         box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
@@ -35,9 +37,25 @@
         /*left: 68px;*/
         /*top: 10px;*/
       }
-      .info:hover {
-        box-shadow: 0px 8px 8px rgba(0,0,0,0.2);
+      .section {
+        padding: 16px;
       }
+      core-collapse .section {
+        border-top: 1px solid #eee;
+        padding: 12px 16px;
+      }
+      a.section {
+        display: block;
+        text-decoration: none;
+        color: #0074D9;
+        text-align: right;
+      }
+      a.section:hover {
+        background-color: #eee;
+      }
+/*      .card:hover {
+        box-shadow: 0px 8px 8px rgba(0,0,0,0.2);
+      }*/
       .line {
         position: absolute;
         z-index: -1;
@@ -62,15 +80,24 @@
       <div>{{getDate(date)}}</div>
     </bh-date-circle>
 
-    <a flex one href="{{src}}" target="_blank" class="info">
-      {{desc}}
-    </a>
+    <div class="card" flex one target="_blank">
+      <div class="section">
+        {{desc}}
+      </div>
+      <core-collapse id="sourceCollapse" opened="{{sourceOpen || selected}}">
+        <a class="section" href="{{src}}" target="_blank">
+          <core-icon icon="link"></core-icon>
+          source
+        </a>
+      </core-collapse>
+    </div>
       
 
   </template>
   <script>
     Polymer("bh-instance", {
       created: function(){
+        this.sourceOpen = false;
         this.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       },
       getMonth: function(date){
@@ -79,6 +106,14 @@
       },
       getDate: function(date){
         return date.getDate();
+      },
+      mouseoverHandler: function(e){
+        console.log("wat");
+        // this.$.sourceCollapse.toggle();
+        this.sourceOpen = true;
+      },
+      mouseleaveHandler: function(e){
+        this.sourceOpen = false;
       }
     });
   </script>
