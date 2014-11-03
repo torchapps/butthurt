@@ -1,29 +1,18 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bh-date-circle.html">
 
-<polymer-element name="bh-instance" attributes="date desc src">
+<polymer-element name="bh-instance" attributes="date desc src" horizontal layout start>
   <template>
     <style>
       :host {
         position: relative;
-        padding: 10px 0px;
+        padding: 16px 0px;
         z-index: 1;
         flex-shrink: 0;
         -webkit-flex-shrink: 0;
       }
       :host(.core-selected) .info {
         box-shadow: 0px 8px 8px rgba(0,0,0,0.2);
-      }
-      .container {
-        position: relative;
-        z-index: 1;
-      }
-      .date-circle {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        background-color: #870E49;
-        color: white;
-        margin-right: 10px;
       }
       .month {
         text-transform: uppercase;
@@ -32,9 +21,9 @@
       .info {
         /*position: absolute;*/
         display: block;
-        width: 256px;
+        /*width: 256px;*/
         background-color: white;
-        padding: 20px;
+        padding: 16px;
         color: #333;
         text-decoration: none;
         box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
@@ -47,7 +36,7 @@
       }
       .line {
         position: absolute;
-        z-index: 0;
+        z-index: -1;
         top: 0px;
         bottom: -20px;
         left: 24px;
@@ -58,18 +47,22 @@
 <!--     {{date}}
     {{desc}}
     {{src}} -->
-    <div class="container" horizontal layout>
-      <div class="date-circle" layout vertical center center-justified>
+<!--       <div class="date-circle" layout vertical center center-justified>
         <div class="month">{{getMonth(date)}}</div>
         <div>{{getDate(date)}}</div>
-      </div>
-
-      <a href="{{src}}" target="_blank" class="info">
-        {{desc}}
-      </a>
-    </div>
-
+      </div> -->
     <div class="line"></div>
+
+    <bh-date-circle>
+      <div class="month">{{getMonth(date)}}</div>
+      <div>{{getDate(date)}}</div>
+    </bh-date-circle>
+
+    <a flex one href="{{src}}" target="_blank" class="info">
+      {{desc}}
+    </a>
+      
+
   </template>
   <script>
     Polymer("bh-instance", {
