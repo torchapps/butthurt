@@ -10,6 +10,7 @@
 <link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
 <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="bower_components/core-drawer-panel/core-drawer-panel.html">
 <link rel="import" href="bower_components/font-roboto/roboto.html">
 <link rel="import" href="bh-instance.html">
@@ -81,55 +82,61 @@
     handleAs="text"
     on-core-error="{{dataErrorHandler}}"
     on-core-response="{{dataHandler}}"
+    loading="{{loadingData}}"
     ></core-ajax>
-
-    <div class="buttlist" layout vertical flex>
-      <core-header-panel id="scrollpanel" mode="scroll" flex on-scroll="{{scrollHandler}}">
-        <core-toolbar style="display: none;">
-          <core-icon-button icon="menu"></core-icon-button>
-        </core-toolbar>
-        <div fit layout vertical center>
-          <div style="position: relative; width: 384px" layout vertical>
-            
-            <div class="container" horizontal layout flex-start>
-              <bh-date-circle class="outline">
-                Now
-              </bh-date-circle>
-              <div style="padding: 16px; color: #333;">
-                <h1>{{daysSinceDate(latestDate(buttList))}} days since last butthurt</h1>
-                <p>
-                  Butthurt is a tribute to Filipino (over)sensitivities, and nothing more.
-                </p>
-                <p>
-                  If you'd like to suggest a new entry, click <a class="inline" href="https://docs.google.com/forms/d/1Cexh4k5-nfwX9RKmv7Dwd4DcGweXLh8Kn6iZXbob0hU/viewform">here</a> or drop us a <a class="inline" href="https://github.com/torchapps/butthurt">pull request</a>!
-                </p>
-                <p>
-                  Made by <a class="inline" href="https://torchapps.github.io/">Torch</a>
-                </p>
-              </div>
-              <div class="line"></div>
-            </div>
-            <core-selector id="list" layout vertical selected="{{selectedInstance}}" on-core-select="{{selectionChangedHandler}}" selectedProperty="selected">
-              <template repeat="{{instance in buttList}}">
-                <bh-instance 
-                  style="min-height: {{toDays(instance.interval) * 20}}px"
-                  date="{{instance.date}}" 
-                  desc="{{instance.desc}}" 
-                  src="{{instance.src}}">
-                </bh-instance>
-              </template>
-            </core-selector>
-          </div>
-        </div>
-      </core-header-panel>
-      <div id="pagecontrols" horizontal layout center-justified>
-        <paper-icon-button icon="av:fast-rewind" on-tap="{{firstHandler}}"></paper-icon-button>
-        <paper-icon-button icon="hardware:keyboard-arrow-up" on-tap="{{prevHandler}}"></paper-icon-button>
-        <paper-icon-button icon="hardware:keyboard-arrow-down" on-tap="{{nextHandler}}"></paper-icon-button>
-        <paper-icon-button icon="av:fast-forward" on-tap="{{lastHandler}}"></paper-icon-button>
+    <template if="{{loadingData}}">
+      <div fit vertical layout center center-justified>
+        <paper-spinner active="{{loadingData}}"></paper-spinner>
       </div>
-    </div>
-
+    </template>
+    <template if="{{!loadingData}}">
+      <div class="buttlist" layout vertical flex>
+        <core-header-panel id="scrollpanel" mode="scroll" flex on-scroll="{{scrollHandler}}">
+          <core-toolbar style="display: none;">
+            <core-icon-button icon="menu"></core-icon-button>
+          </core-toolbar>
+          <div fit layout vertical center>
+            <div style="position: relative; width: 384px" layout vertical>
+              
+              <div class="container" horizontal layout flex-start>
+                <bh-date-circle class="outline">
+                  Now
+                </bh-date-circle>
+                <div style="padding: 16px; color: #333;">
+                  <h1>{{daysSinceDate(latestDate(buttList))}} days since last butthurt</h1>
+                  <p>
+                    Butthurt is a tribute to Filipino (over)sensitivities, and nothing more.
+                  </p>
+                  <p>
+                    If you'd like to suggest a new entry, click <a class="inline" href="https://docs.google.com/forms/d/1Cexh4k5-nfwX9RKmv7Dwd4DcGweXLh8Kn6iZXbob0hU/viewform">here</a> or drop us a <a class="inline" href="https://github.com/torchapps/butthurt">pull request</a>!
+                  </p>
+                  <p>
+                    Made by <a class="inline" href="https://torchapps.github.io/">Torch</a>
+                  </p>
+                </div>
+                <div class="line"></div>
+              </div>
+              <core-selector id="list" layout vertical selected="{{selectedInstance}}" on-core-select="{{selectionChangedHandler}}" selectedProperty="selected">
+                <template repeat="{{instance in buttList}}">
+                  <bh-instance 
+                    style="min-height: {{toDays(instance.interval) * 20}}px"
+                    date="{{instance.date}}" 
+                    desc="{{instance.desc}}" 
+                    src="{{instance.src}}">
+                  </bh-instance>
+                </template>
+              </core-selector>
+            </div>
+          </div>
+        </core-header-panel>
+        <div id="pagecontrols" horizontal layout center-justified>
+          <paper-icon-button icon="av:fast-rewind" on-tap="{{firstHandler}}"></paper-icon-button>
+          <paper-icon-button icon="hardware:keyboard-arrow-up" on-tap="{{prevHandler}}"></paper-icon-button>
+          <paper-icon-button icon="hardware:keyboard-arrow-down" on-tap="{{nextHandler}}"></paper-icon-button>
+          <paper-icon-button icon="av:fast-forward" on-tap="{{lastHandler}}"></paper-icon-button>
+        </div>
+      </div>
+    </template>
   </template>
   <script>
     Polymer("bh-app", {
