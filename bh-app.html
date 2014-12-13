@@ -62,13 +62,24 @@
         font-weight: 300;
         margin: 0;
       }
-      .container .line {
+/*      .container .line {
         position: absolute;
         z-index: -1;
         top: 96px;
         bottom: -20px;
         left: 32px;
         width: 2px;
+        background-color: #870E49;
+      }*/
+      #background {
+        background-color: #eee;
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+      }
+      #background :first-child {
         background-color: #870E49;
       }
     </style>
@@ -81,6 +92,11 @@
     on-core-response="{{dataHandler}}"
     loading="{{loadingData}}"
     ></core-ajax>
+
+    <div id="background" horizontal layout>
+      <div flex></div>
+      <div flex></div>
+    </div>
 
 <!--       <div fit vertical layout center center-justified>
         <paper-spinner active="{{loadingData}}"></paper-spinner>
@@ -109,7 +125,6 @@
                   Made by <a class="inline" href="https://torchapps.github.io/">Torch</a>
                 </p>
               </div>
-              <div class="line"></div>
             </div>
             <core-selector id="list" layout vertical selected="{{selectedInstance}}" on-core-select="{{selectionChangedHandler}}" selectedProperty="selected">
               <template repeat="{{instance in buttList}}">
