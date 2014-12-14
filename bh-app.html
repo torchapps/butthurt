@@ -86,9 +86,15 @@
         position: relative;
         width: 384px;
       }
+      .sidebar {
+        width: calc(50% - 192px + 56px - 8px);
+      }
       @media(max-width: 640px){
         .butthurt-container {
           width: 100%;
+        }
+        .sidebar {
+          width: 56px;
         }
       }
     </style>
@@ -103,7 +109,7 @@
     ></core-ajax>
 
     <div id="background" horizontal layout>
-      <div style="width: calc(50% - 192px + 56px - 8px)"></div>
+      <div class="sidebar"></div>
       <div flex></div>
     </div>
 

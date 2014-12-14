@@ -8,10 +8,11 @@
     <style>
       :host {
         position: relative;
-        padding: 16px 0px;
+        /*padding: 16px 0px;*/
         z-index: 1;
         flex-shrink: 0;
         -webkit-flex-shrink: 0;
+        border-top: 1px dashed #870E49;
       }
       bh-date-circle {
         transition: all 0.2s;
@@ -54,7 +55,7 @@
       <div class="year">{{getYear(date)}}</div>
     </bh-date-circle>
 
-    <div class="card" flex one target="_blank">
+    <div flex one target="_blank">
       <div class="section">
         {{desc}}
       </div>
