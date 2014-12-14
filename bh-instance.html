@@ -15,7 +15,7 @@
       }
       bh-date-circle {
         transition: all 0.2s;
-        margin-right: 8px;
+        /*margin-right: 8px;*/
       }
       .month, .year {
         text-transform: uppercase;
@@ -46,18 +46,7 @@
       a.section:hover {
         background-color: #eee;
       }
-      .line {
-        position: absolute;
-        z-index: -1;
-        top: 0px;
-        bottom: -20px;
-        left: 28px;
-        width: 2px;
-        background-color: #870E49;
-      }
     </style>
-
-    <div class="line"></div>
 
     <bh-date-circle class="{{selected ? 'large' : ''}}">
       <div class="month">{{getMonth(date)}}</div>
