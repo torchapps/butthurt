@@ -12,17 +12,18 @@
     <meta property="og:description" content="A tribute to Filipino (over)sensitivities.">
     <!--
     <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
-    <script src="bower_components/underscore/underscore-min.js"></script>
+    
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     -->
     <link href='//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en' rel='stylesheet' type='text/css'>
-
-    <script type="text/javascript" src="papaparse.min.js"></script>
+    
+    <script src="bower_components/underscore/underscore-min.js"></script>
     <script src="bower_components/react/react.js"></script>
     <script src="bower_components/react/JSXTransformer.js"></script>
     <script src="bower_components/flux/dist/Flux.js"></script>
     <script src="bower_components/reqwest/reqwest.min.js"></script>
     <script src="bower_components/microevents/microevent.js"></script>
+    <script src="bower_components/papaparse/papaparse.min.js"></script>
 
     <!-- <link rel="import" href="bh-app.html"> -->
 
@@ -46,12 +47,15 @@
   </head>
 
   <body>
-    <div id="example"></div>
+    <div id="app"></div>
+    <!--
     <script type="text/jsx">
       React.render(
         <h1>Hello, world!</h1>,
         document.getElementById('example')
       );
     </script>
+    -->
+    <script type="text/jsx" src="app.js"></script>
   </body>
 </html>
