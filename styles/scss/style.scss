@@ -57,9 +57,15 @@ a.inline {
     box-sizing: border-box;
     color: white;
     font-weight: 300;
+    h1 {
+      margin-bottom: 0px;
+    }
   }
   .main {
     padding: 16px;
+    p {
+      margin-top: 0px;
+    }
   }
 }
 

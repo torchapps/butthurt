@@ -48,6 +48,7 @@ var App = React.createClass({
       }
     }.bind(this);
     var butthurtList = this.state.butthurts.map(function(butthurt){
+      console.log(butthurt);
       return (
         <div className="butthurt-container horizontal layout" style={getStyle(butthurt.interval)}>
           <div className="side">
@@ -62,7 +63,10 @@ var App = React.createClass({
             </div>
           </div>
           <div className="main flex">
-            {butthurt.desc}
+            <p>
+              {butthurt.desc}
+            </p>
+            <a className="inline" href={butthurt.src}>Source</a>
           </div>
         </div>
       )
@@ -76,10 +80,10 @@ var App = React.createClass({
         <div className="fit layout vertical center">
           <div className="butthurt-container horizontal layout">
             <div className="side">
-              <h1>{daysSince}</h1>
+              <h1>Now</h1>
             </div>
             <div className="main flex">
-              <h1>days since last butthurt</h1>
+              <h1>{daysSince} Days since last butthurt</h1>
               <p>
                 Butthurt is a tribute to Filipino (over)sensitivities, and nothing more.
               </p>

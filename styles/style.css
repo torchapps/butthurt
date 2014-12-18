@@ -48,8 +48,12 @@ a.inline {
     box-sizing: border-box;
     color: white;
     font-weight: 300; }
+    .butthurt-container .side h1 {
+      margin-bottom: 0px; }
   .butthurt-container .main {
     padding: 16px; }
+    .butthurt-container .main p {
+      margin-top: 0px; }
 
 @media (max-width: 640px) {
   .butthurt-container {
