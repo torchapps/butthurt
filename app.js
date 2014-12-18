@@ -44,7 +44,7 @@ var App = React.createClass({
     var daysSince = moment().diff(this.latestDate(this.state.butthurts), 'days');
     var getStyle = function(interval) {
       return {
-        'min-height': interval * 20 + "px"
+        'minHeight': interval * 20 + "px"
       }
     }.bind(this);
     var butthurtList = this.state.butthurts.map(function(butthurt){
