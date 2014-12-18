@@ -33,25 +33,34 @@ a.inline {
   bottom: 0px;
   left: 0px;
   right: 0px;
-}
-#background :first-child {
-  background-color: $accent;
+  :first-child {
+    background-color: $accent;
+  }
 }
 
 .butthurt-container {
   position: relative;
   width: 480px;
-}
-.butthurt-container .side {
-  width: 64px;
-  text-align: right;
-  padding: 16px;
-  box-sizing: border-box;
-  color: white;
-  font-weight: 300;
-}
-.butthurt-container .main {
-  padding: 16px;
+  flex-shrink: 0;
+  .month, .year {
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  .day {
+    font-weight: bold;
+    font-size: 21px;
+  }
+  .side {
+    width: 64px;
+    text-align: right;
+    padding: 16px;
+    box-sizing: border-box;
+    color: white;
+    font-weight: 300;
+  }
+  .main {
+    padding: 16px;
+  }
 }
 
 @media(max-width: 640px){

@@ -28,24 +28,28 @@ a.inline {
   bottom: 0px;
   left: 0px;
   right: 0px; }
-
-#background :first-child {
-  background-color: #870E49; }
+  #background :first-child {
+    background-color: #870E49; }
 
 .butthurt-container {
   position: relative;
-  width: 480px; }
-
-.butthurt-container .side {
-  width: 64px;
-  text-align: right;
-  padding: 16px;
-  box-sizing: border-box;
-  color: white;
-  font-weight: 300; }
-
-.butthurt-container .main {
-  padding: 16px; }
+  width: 480px;
+  flex-shrink: 0; }
+  .butthurt-container .month, .butthurt-container .year {
+    text-transform: uppercase;
+    font-size: 10px; }
+  .butthurt-container .day {
+    font-weight: bold;
+    font-size: 21px; }
+  .butthurt-container .side {
+    width: 64px;
+    text-align: right;
+    padding: 16px;
+    box-sizing: border-box;
+    color: white;
+    font-weight: 300; }
+  .butthurt-container .main {
+    padding: 16px; }
 
 @media (max-width: 640px) {
   .butthurt-container {

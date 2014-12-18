@@ -9,10 +9,17 @@ var App = React.createClass({
       var labels = raw.data.shift();
 
       var results = _.chain(raw.data)
+        .filter(function(d){
+          return d.length >= 4;
+        })
+        // .tap(function(d){
+        //   console.log(d);
+        // })
         .map(function (r){
           var o = {};
           for (var i in r) o[labels[i]] = r[i];
-          o.date = new Date(o.date);
+          o.date = moment(o.date);
+          // console.log(o.date);
           return o;
         })
         .reverse()
@@ -28,25 +35,49 @@ var App = React.createClass({
     }.bind(this));
   },
   daysSinceDate: function(butthurtDate){
-    // return Math.floor((new Date() - butthurtDate) / 1000 / 60 / 60 / 24);
-    return this.dateInterval(new Date(), butthurtDate);
+    return butthurtDate ? moment().diff(butthurtDate, 'days') : null;
   },
   latestDate: function(butthurts){
     var date = _.chain(butthurts)
+      // .tap(function(d){
+      //   console.log(d);
+      // })
       .sortBy("date")
       .last()
       .value();
     return date ? date.date : null;
   }, 
   dateInterval: function(newDate, oldDate){
-    return Math.floor(this.toDays(newDate - oldDate));
+    return newDate.diff(oldDate, 'days');
+    // return Math.floor(this.toDays(newDate - oldDate));
   },
   toDays: function(date){
     //date is in milliseconds
     return date / 1000 / 60 / 60 / 24;
   },
   render: function(){
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var daysSince = this.daysSinceDate(this.latestDate(this.state.butthurts));
+    var butthurtList = this.state.butthurts.map(function(butthurt){
+      return (
+        <div className="butthurt-container horizontal layout">
+          <div className="side">
+            <div className="month">
+              {butthurt.date.format("MMM")}
+            </div>
+            <div className="day">
+              {butthurt.date.format("DD")}
+            </div>
+            <div className="year">
+              {butthurt.date.format("YYYY")}
+            </div>
+          </div>
+          <div className="main flex">
+            {butthurt.desc}
+          </div>
+        </div>
+      )
+    });
     return (
       <div>
         <div id="background" className="horizontal layout">
@@ -71,6 +102,7 @@ var App = React.createClass({
               </p>
             </div>
           </div>
+          {butthurtList}
         </div>
       </div>
     )

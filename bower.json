@@ -30,6 +30,7 @@
     "reqwest": "~1.1.5",
     "microevents": "*",
     "flux": "facebook/flux#~2.0.2",
-    "papaparse": "~4.0.7"
+    "papaparse": "~4.0.7",
+    "momentjs": "~2.8.4"
   }
 }
