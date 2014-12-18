@@ -31,6 +31,7 @@
     "microevents": "*",
     "flux": "facebook/flux#~2.0.2",
     "papaparse": "~4.0.7",
-    "momentjs": "~2.8.4"
+    "momentjs": "~2.8.4",
+    "lodash": "~2.4.1"
   }
 }

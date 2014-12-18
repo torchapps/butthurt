@@ -1,6 +1,15 @@
+var bh = {
+  arrowKeys: {
+    LEFT: 37,
+    UP: 38,
+    RIGHT: 39,
+    DOWN: 40
+  }
+}
+
 var App = React.createClass({
   getInitialState: function(){
-    return {butthurts: []}
+    return {butthurts: [], selectedIndex: 0}
   },
   componentDidMount: function(){
     reqwest("data.csv", function(data){
@@ -31,14 +40,49 @@ var App = React.createClass({
         .value();
       this.setState({butthurts: results});
     }.bind(this));
+
+    window.onscroll = this.scrollHandler;
+    window.onkeydown = this.keyHandler;
+  },
+  findButthurtIndexFromScroll: function(){
+    var y = document.body.scrollTop;
+    var butthurtNodes = document.querySelectorAll('.selectable');
+
+    var foundIndex = _.findIndex(butthurtNodes, function(node, index, list){
+      var nextNode = list[index + 1]
+      var upperBound = node.offsetTop;
+      var lowerBound = nextNode ? nextNode.offsetTop : node.offsetHeight;
+      return y >= upperBound && y < lowerBound;
+    });
+
+    return Math.max(foundIndex, 0);
+  },
+  scrollHandler: _.throttle(function(){
+    this.setState({selectedIndex: this.findButthurtIndexFromScroll()});
+    console.log(this.state.selectedIndex);
+  }, 200, {leading: false}),
+  keyHandler: function(e){
+    var keysPressed = function(keys){
+      return _.contains(keys, e.keyCode);
+    }
+    if(keysPressed([32, 37, 38, 39, 40])) {
+      e.preventDefault();
+    }
+
+    var nextKeys = [bh.arrowKeys.RIGHT, bh.arrowKeys.DOWN];
+    var prevKeys = [bh.arrowKeys.LEFT, bh.arrowKeys.UP];
+
+    if (keysPressed(nextKeys)) {
+      // this.nextHandler();
+      console.log('next');
+    } else if (keysPressed(prevKeys)) {
+      console.log('prev');
+    }
   },
   latestDate: function(butthurts){
     var date = _.chain(butthurts).sortBy("date").last().value();
     return date ? date.date : null;
   }, 
-  dateInterval: function(newDate, oldDate){
-    return newDate.diff(oldDate, 'days');
-  },
   render: function(){
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var daysSince = moment().diff(this.latestDate(this.state.butthurts), 'days');
@@ -47,10 +91,9 @@ var App = React.createClass({
         'minHeight': interval * 20 + "px"
       }
     }.bind(this);
-    var butthurtList = this.state.butthurts.map(function(butthurt){
-      console.log(butthurt);
+    var butthurtList = this.state.butthurts.map(function(butthurt, index){
       return (
-        <div className="butthurt-container horizontal layout" style={getStyle(butthurt.interval)}>
+        <div className="butthurt-container selectable horizontal layout" style={getStyle(butthurt.interval)}>
           <div className="side">
             <div className="month">
               {butthurt.date.format("MMM")}
@@ -78,7 +121,7 @@ var App = React.createClass({
           <div className="flex"></div>
         </div>
         <div className="fit layout vertical center">
-          <div className="butthurt-container horizontal layout">
+          <div className="butthurt-container selectable horizontal layout">
             <div className="side">
               <h1>Now</h1>
             </div>
