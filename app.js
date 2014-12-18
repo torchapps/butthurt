@@ -9,7 +9,7 @@ var bh = {
 
 var App = React.createClass({
   getInitialState: function(){
-    return {butthurts: [], selectedIndex: 0}
+    return {butthurts: [], selectedNode: null, previousNode: null, nextNode: null}
   },
   componentDidMount: function(){
     reqwest("data.csv", function(data){
@@ -41,10 +41,10 @@ var App = React.createClass({
       this.setState({butthurts: results});
     }.bind(this));
 
-    window.onscroll = this.scrollHandler;
+    // window.onscroll = this.scrollHandler;
     window.onkeydown = this.keyHandler;
   },
-  findButthurtIndexFromScroll: function(){
+  findButthurtNodeFromScroll: function(){
     var y = document.body.scrollTop;
     var butthurtNodes = document.querySelectorAll('.selectable');
 
@@ -55,13 +55,16 @@ var App = React.createClass({
       return y >= upperBound && y < lowerBound;
     });
 
-    return Math.max(foundIndex, 0);
+    this.setState({selectedNode: butthurtNodes[Math.max(foundIndex, 0)]});
+    this.setState({previousNode: butthurtNodes[Math.max(foundIndex - 1, 0)]});
+    this.setState({nextNode: butthurtNodes[Math.max(foundIndex + 1, 0)]});
   },
   scrollHandler: _.throttle(function(){
-    this.setState({selectedIndex: this.findButthurtIndexFromScroll()});
-    console.log(this.state.selectedIndex);
+    this.findButthurtNodeFromScroll();
+    // console.log(this.state.selectedNode);
   }, 200, {leading: false}),
   keyHandler: function(e){
+    this.findButthurtNodeFromScroll();
     var keysPressed = function(keys){
       return _.contains(keys, e.keyCode);
     }
@@ -74,10 +77,21 @@ var App = React.createClass({
 
     if (keysPressed(nextKeys)) {
       // this.nextHandler();
-      console.log('next');
+      // console.log('next');
+      console.log(this.state.nextNode);
+      this.animateToButthurt(this.state.nextNode);
     } else if (keysPressed(prevKeys)) {
-      console.log('prev');
+      // console.log('prev');
+      this.animateToButthurt(this.state.previousNode);
     }
+  },
+  animateScroll: function(loc){
+    // console.log(this.$.scrollpanel.scroller);
+    var topMargin = 0;
+    $(document.body).animate({ scrollTop: loc - topMargin + "px" });
+  },
+  animateToButthurt: function(butthurt){
+    this.animateScroll(butthurt.offsetTop);
   },
   latestDate: function(butthurts){
     var date = _.chain(butthurts).sortBy("date").last().value();
