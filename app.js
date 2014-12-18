@@ -4,14 +4,15 @@ var App = React.createClass({
   },
   componentDidMount: function(){
     reqwest("data.csv", function(data){
-      // console.log(data);
       var raw = Papa.parse(data);
       var labels = raw.data.shift();
 
       var results = _.chain(raw.data)
+        // remove blank entries. stopgap.
         .filter(function(d){
           return d.length >= 4;
         })
+        // convert to proper form.
         .map(function (r){
           var o = {};
           for (var i in r) o[labels[i]] = r[i];
@@ -19,9 +20,10 @@ var App = React.createClass({
           return o;
         })
         .reverse()
+        // calculate intervals for positioning
         .forEach(function(r, index, list){
           if (list[index + 1]) {
-            r.interval = r.date - list[index + 1].date;
+            r.interval = r.date.diff(list[index + 1].date, 'days');
           } else {
             r.interval = 0;
           }
@@ -31,26 +33,18 @@ var App = React.createClass({
     }.bind(this));
   },
   latestDate: function(butthurts){
-    var date = _.chain(butthurts)
-      .sortBy("date")
-      .last()
-      .value();
+    var date = _.chain(butthurts).sortBy("date").last().value();
     return date ? date.date : null;
   }, 
   dateInterval: function(newDate, oldDate){
     return newDate.diff(oldDate, 'days');
-    // return Math.floor(this.toDays(newDate - oldDate));
-  },
-  toDays: function(date){
-    //date is in milliseconds
-    return date / 1000 / 60 / 60 / 24;
   },
   render: function(){
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var daysSince = moment().diff(this.latestDate(this.state.butthurts), 'days');
     var getStyle = function(interval) {
       return {
-        'min-height': this.toDays(interval) * 20 + "px"
+        'min-height': interval * 20 + "px"
       }
     }.bind(this);
     var butthurtList = this.state.butthurts.map(function(butthurt){
