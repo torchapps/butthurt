@@ -47,17 +47,26 @@ var App = React.createClass({
   findButthurtNodeFromScroll: function(){
     var y = document.body.scrollTop;
     var butthurtNodes = document.querySelectorAll('.selectable');
+    var tolerance = 24;
 
-    var foundIndex = _.findIndex(butthurtNodes, function(node, index, list){
-      var nextNode = list[index + 1]
-      var upperBound = node.offsetTop;
-      var lowerBound = nextNode ? nextNode.offsetTop : node.offsetHeight;
-      return y >= upperBound && y < lowerBound;
-    });
+    var foundIndex = Math.max(
+      _.findIndex(butthurtNodes, function(node, index, list){
+        var nextNode = list[index + 1]
+        var upperBound = node.offsetTop;
+        var lowerBound = nextNode ? nextNode.offsetTop : node.offsetHeight;
+        return y >= upperBound && y < lowerBound;
+      }), 0);
 
-    this.setState({selectedNode: butthurtNodes[Math.max(foundIndex, 0)]});
-    this.setState({previousNode: butthurtNodes[Math.max(foundIndex - 1, 0)]});
-    this.setState({nextNode: butthurtNodes[Math.max(foundIndex + 1, 0)]});
+    this.setState({selectedNode: butthurtNodes[foundIndex]});
+    this.setState({nextNode: butthurtNodes[foundIndex + 1]});
+
+    if (butthurtNodes[foundIndex].offsetTop >= y - 24) {
+      // scroll position is close enough to the node to consider the node to be at the top of the screen.
+      this.setState({previousNode: butthurtNodes[foundIndex - 1]});
+    } else {
+      // scroll position is so that the node is way above the screen to consider that node to be the previous node
+      this.setState({previousNode: this.state.selectedNode});
+    }
   },
   scrollHandler: _.throttle(function(){
     this.findButthurtNodeFromScroll();
