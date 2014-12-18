@@ -12,14 +12,10 @@ var App = React.createClass({
         .filter(function(d){
           return d.length >= 4;
         })
-        // .tap(function(d){
-        //   console.log(d);
-        // })
         .map(function (r){
           var o = {};
           for (var i in r) o[labels[i]] = r[i];
           o.date = moment(o.date);
-          // console.log(o.date);
           return o;
         })
         .reverse()
@@ -36,9 +32,6 @@ var App = React.createClass({
   },
   latestDate: function(butthurts){
     var date = _.chain(butthurts)
-      // .tap(function(d){
-      //   console.log(d);
-      // })
       .sortBy("date")
       .last()
       .value();
