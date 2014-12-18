@@ -34,9 +34,6 @@ var App = React.createClass({
       this.setState({butthurts: results});
     }.bind(this));
   },
-  daysSinceDate: function(butthurtDate){
-    return butthurtDate ? moment().diff(butthurtDate, 'days') : null;
-  },
   latestDate: function(butthurts){
     var date = _.chain(butthurts)
       // .tap(function(d){
@@ -57,10 +54,15 @@ var App = React.createClass({
   },
   render: function(){
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var daysSince = this.daysSinceDate(this.latestDate(this.state.butthurts));
+    var daysSince = moment().diff(this.latestDate(this.state.butthurts), 'days');
+    var getStyle = function(interval) {
+      return {
+        'min-height': this.toDays(interval) * 20 + "px"
+      }
+    }.bind(this);
     var butthurtList = this.state.butthurts.map(function(butthurt){
       return (
-        <div className="butthurt-container horizontal layout">
+        <div className="butthurt-container horizontal layout" style={getStyle(butthurt.interval)}>
           <div className="side">
             <div className="month">
               {butthurt.date.format("MMM")}
