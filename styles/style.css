@@ -1,7 +1,9 @@
 body {
   font-family: RobotoDraft, Helvetica;
-  background-color: #eee;
-}
+  background-color: #eee; }
+
+h1 {
+  font-weight: 300; }
 
 a.inline {
   transition: all 0.2s;
@@ -9,20 +11,15 @@ a.inline {
   color: #870E49;
   box-shadow: 0px -1px 0px #870E49 inset;
   text-decoration: none;
-  margin: 0px;
-}
-a.inline:hover {
-  /*box-shadow: 0px 4px 4px rgba(0,0,0,0.2);*/
-  color: white;
-  box-shadow: 0px -24px 0px #870E49 inset;
-}
-a.inline:active {
-  box-shadow: 0px -24px 0px #870E49 inset, 0px 0px 0px 8px #870E49;
-}
+  margin: 0px; }
+  a.inline:hover {
+    color: white;
+    box-shadow: 0px -24px 0px #870E49 inset; }
+  a.inline:active {
+    box-shadow: 0px -24px 0px #870E49 inset, 0px 0px 0px 8px #870E49; }
 
 .sidebar {
-  width: calc(50% - 192px + 56px - 8px);
-}
+  width: calc(50% - 240px + 64px); }
 
 #background {
   background-color: #eee;
@@ -30,22 +27,31 @@ a.inline:active {
   top: 0px;
   bottom: 0px;
   left: 0px;
-  right: 0px;
-}
+  right: 0px; }
+
 #background :first-child {
-  background-color: #870E49;
-}
+  background-color: #870E49; }
 
 .butthurt-container {
   position: relative;
-  width: 384px;
-}
+  width: 480px; }
 
-@media(max-width: 640px){
+.butthurt-container .side {
+  width: 64px;
+  text-align: right;
+  padding: 16px;
+  box-sizing: border-box;
+  color: white;
+  font-weight: 300; }
+
+.butthurt-container .main {
+  padding: 16px; }
+
+@media (max-width: 640px) {
   .butthurt-container {
-    width: 100%;
-  }
+    width: 100%; }
+
   .sidebar {
-    width: 56px;
-  }
-}
+    width: 56px; } }
+
+/*# sourceMappingURL=style.css.map */

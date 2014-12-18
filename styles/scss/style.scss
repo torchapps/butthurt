@@ -1,0 +1,64 @@
+$accent: #870E49;
+
+body {
+  font-family: RobotoDraft, Helvetica;
+  background-color: #eee;
+}
+h1 {
+  font-weight: 300;
+}
+a.inline {
+  transition: all 0.2s;
+  display: inline-block;
+  color: $accent;
+  box-shadow: 0px -1px 0px $accent inset;
+  text-decoration: none;
+  margin: 0px;
+  &:hover {
+    color: white;
+    box-shadow: 0px -24px 0px $accent inset;
+  }
+  &:active {
+    box-shadow: 0px -24px 0px $accent inset, 0px 0px 0px 8px $accent;
+  }
+}
+.sidebar {
+  width: calc(50% - 240px + 64px);
+}
+
+#background {
+  background-color: #eee;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+#background :first-child {
+  background-color: $accent;
+}
+
+.butthurt-container {
+  position: relative;
+  width: 480px;
+}
+.butthurt-container .side {
+  width: 64px;
+  text-align: right;
+  padding: 16px;
+  box-sizing: border-box;
+  color: white;
+  font-weight: 300;
+}
+.butthurt-container .main {
+  padding: 16px;
+}
+
+@media(max-width: 640px){
+  .butthurt-container {
+    width: 100%;
+  }
+  .sidebar {
+    width: 56px;
+  }
+}
