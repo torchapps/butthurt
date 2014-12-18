@@ -1,4 +1,51 @@
 body {
   font-family: RobotoDraft, Helvetica;
+  background-color: #eee;
 }
 
+a.inline {
+  transition: all 0.2s;
+  display: inline-block;
+  color: #870E49;
+  box-shadow: 0px -1px 0px #870E49 inset;
+  text-decoration: none;
+  margin: 0px;
+}
+a.inline:hover {
+  /*box-shadow: 0px 4px 4px rgba(0,0,0,0.2);*/
+  color: white;
+  box-shadow: 0px -24px 0px #870E49 inset;
+}
+a.inline:active {
+  box-shadow: 0px -24px 0px #870E49 inset, 0px 0px 0px 8px #870E49;
+}
+
+.sidebar {
+  width: calc(50% - 192px + 56px - 8px);
+}
+
+#background {
+  background-color: #eee;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+#background :first-child {
+  background-color: #870E49;
+}
+
+.butthurt-container {
+  position: relative;
+  width: 384px;
+}
+
+@media(max-width: 640px){
+  .butthurt-container {
+    width: 100%;
+  }
+  .sidebar {
+    width: 56px;
+  }
+}
