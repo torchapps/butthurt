@@ -45,9 +45,8 @@ var App = React.createClass({
     window.onkeydown = this.keyHandler;
   },
   findButthurtNodeFromScroll: function(){
-    var y = document.body.scrollTop;
+    var y = $("html,body").scrollTop() || $("body").scrollTop(); // because fuck firefox;
     var butthurtNodes = document.querySelectorAll('.selectable');
-    var tolerance = 24;
 
     var foundIndex = Math.max(
       _.findIndex(butthurtNodes, function(node, index, list){
@@ -56,11 +55,11 @@ var App = React.createClass({
         var lowerBound = nextNode ? nextNode.offsetTop : node.offsetHeight;
         return y >= upperBound && y < lowerBound;
       }), 0);
-
+    // console.log(foundIndex);
     this.setState({selectedNode: butthurtNodes[foundIndex]});
     this.setState({nextNode: butthurtNodes[foundIndex + 1]});
 
-    if (butthurtNodes[foundIndex].offsetTop >= y - 24) {
+    if (butthurtNodes[foundIndex].offsetTop === y) {
       // scroll position is close enough to the node to consider the node to be at the top of the screen.
       this.setState({previousNode: butthurtNodes[foundIndex - 1]});
     } else {
@@ -68,12 +67,11 @@ var App = React.createClass({
       this.setState({previousNode: this.state.selectedNode});
     }
   },
-  scrollHandler: _.throttle(function(){
-    this.findButthurtNodeFromScroll();
-    // console.log(this.state.selectedNode);
-  }, 200, {leading: false}),
+  // scrollHandler: _.throttle(function(){
+  //   this.findButthurtNodeFromScroll();
+  //   // console.log(this.state.selectedNode);
+  // }, 200, {leading: false}),
   keyHandler: function(e){
-    this.findButthurtNodeFromScroll();
     var keysPressed = function(keys){
       return _.contains(keys, e.keyCode);
     }
@@ -84,20 +82,18 @@ var App = React.createClass({
     var nextKeys = [bh.arrowKeys.RIGHT, bh.arrowKeys.DOWN];
     var prevKeys = [bh.arrowKeys.LEFT, bh.arrowKeys.UP];
 
-    if (keysPressed(nextKeys)) {
-      // this.nextHandler();
-      // console.log('next');
-      console.log(this.state.nextNode);
+    if (keysPressed(nextKeys.concat(prevKeys))) {
+      this.findButthurtNodeFromScroll();
+    }
+    if (keysPressed(nextKeys) && this.state.nextNode) {
       this.animateToButthurt(this.state.nextNode);
-    } else if (keysPressed(prevKeys)) {
-      // console.log('prev');
+    } else if (keysPressed(prevKeys) && this.state.previousNode) {
       this.animateToButthurt(this.state.previousNode);
     }
   },
   animateScroll: function(loc){
-    // console.log(this.$.scrollpanel.scroller);
     var topMargin = 0;
-    $(document.body).animate({ scrollTop: loc - topMargin + "px" });
+    $("body,html").animate({ scrollTop: loc - topMargin + "px" });
   },
   animateToButthurt: function(butthurt){
     this.animateScroll(butthurt.offsetTop);
