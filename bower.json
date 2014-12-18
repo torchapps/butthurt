@@ -25,6 +25,10 @@
     "core-toolbar": "Polymer/core-toolbar#~0.5.2",
     "paper-icon-button": "Polymer/paper-icon-button#~0.5.2",
     "paper-spinner": "Polymer/paper-spinner#~0.5.2",
-    "font-roboto": "Polymer/font-roboto#~0.5.2"
+    "font-roboto": "Polymer/font-roboto#~0.5.2",
+    "react": "~0.12.1",
+    "reqwest": "~1.1.5",
+    "microevents": "*",
+    "flux": "facebook/flux#~2.0.2"
   }
 }
