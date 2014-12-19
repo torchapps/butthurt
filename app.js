@@ -45,21 +45,21 @@ var App = React.createClass({
     window.onkeydown = this.keyHandler;
   },
   findButthurtNodeFromScroll: function(){
-    var y = $("html,body").scrollTop() || $("body").scrollTop(); // because fuck firefox;
+    var y = $("body,html").scrollTop() || $("body").scrollTop(); // because fuck firefox;
     var butthurtNodes = document.querySelectorAll('.selectable');
 
     var foundIndex = Math.max(
       _.findIndex(butthurtNodes, function(node, index, list){
-        var nextNode = list[index + 1]
+        var nextNode = list[index + 1];
         var upperBound = node.offsetTop;
         var lowerBound = nextNode ? nextNode.offsetTop : node.offsetHeight;
+        // console.log(upperBound, lowerBound);
         return y >= upperBound && y < lowerBound;
       }), 0);
-    // console.log(foundIndex);
     this.setState({selectedNode: butthurtNodes[foundIndex]});
     this.setState({nextNode: butthurtNodes[foundIndex + 1]});
 
-    if (butthurtNodes[foundIndex].offsetTop === y) {
+    if (butthurtNodes[foundIndex].offsetTop >= y) {
       // scroll position is close enough to the node to consider the node to be at the top of the screen.
       this.setState({previousNode: butthurtNodes[foundIndex - 1]});
     } else {
@@ -67,33 +67,40 @@ var App = React.createClass({
       this.setState({previousNode: this.state.selectedNode});
     }
   },
-  // scrollHandler: _.throttle(function(){
-  //   this.findButthurtNodeFromScroll();
-  //   // console.log(this.state.selectedNode);
-  // }, 200, {leading: false}),
   keyHandler: function(e){
-    var keysPressed = function(keys){
-      return _.contains(keys, e.keyCode);
-    }
-    if(keysPressed([32, 37, 38, 39, 40])) {
-      e.preventDefault();
-    }
+    var keysPressed = function(keys){ return _.contains(keys, e.keyCode); }
+
+    if(keysPressed([32, 37, 38, 39, 40])) { e.preventDefault(); }
 
     var nextKeys = [bh.arrowKeys.RIGHT, bh.arrowKeys.DOWN];
     var prevKeys = [bh.arrowKeys.LEFT, bh.arrowKeys.UP];
 
-    if (keysPressed(nextKeys.concat(prevKeys))) {
-      this.findButthurtNodeFromScroll();
-    }
-    if (keysPressed(nextKeys) && this.state.nextNode) {
-      this.animateToButthurt(this.state.nextNode);
-    } else if (keysPressed(prevKeys) && this.state.previousNode) {
-      this.animateToButthurt(this.state.previousNode);
+    if (keysPressed(nextKeys)) {
+      this.goNext();
+    } else if (keysPressed(prevKeys)) {
+      this.goPrev();
     }
   },
+  goNext: function(){
+    this.findButthurtNodeFromScroll();
+    // settimeout needed to make buttons work. no fucking idea why.
+    setTimeout(function(){
+      if (this.state.nextNode){
+        this.animateToButthurt(this.state.nextNode);
+      }
+    }.bind(this), 0);
+  },
+  goPrev: function(){
+    this.findButthurtNodeFromScroll();
+    // settimeout needed to make buttons work. no fucking idea why.
+    setTimeout(function(){
+      if (this.state.previousNode) {
+        this.animateToButthurt(this.state.previousNode);
+      }
+    }.bind(this), 0);
+  },
   animateScroll: function(loc){
-    var topMargin = 0;
-    $("body,html").animate({ scrollTop: loc - topMargin + "px" });
+    $("body,html").animate({ scrollTop: loc + "px" });
   },
   animateToButthurt: function(butthurt){
     this.animateScroll(butthurt.offsetTop);
@@ -139,10 +146,10 @@ var App = React.createClass({
           <div className="sidebar"></div>
           <div className="flex"></div>
         </div>
-        <div className="fit layout vertical center">
+        <div className="layout vertical center butthurt-list">
           <div className="butthurt-container selectable horizontal layout">
             <div className="side">
-              <h1>Now</h1>
+              <h3 id="now">Now</h3>
             </div>
             <div className="main flex">
               <h1>{daysSince} Days since last butthurt</h1>
@@ -158,6 +165,12 @@ var App = React.createClass({
             </div>
           </div>
           {butthurtList}
+        </div>
+        <div id="controls" className="vertical layout center">
+          <div className="control-container horizontal layout">
+            <button type="button" className="flex control" onClick={this.goPrev}>Prev</button>
+            <button type="button" className="flex control" onClick={this.goNext}>Next</button>
+          </div>
         </div>
       </div>
     )

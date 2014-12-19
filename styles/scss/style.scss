@@ -1,12 +1,26 @@
 $accent: #870E49;
+$font: RobotoDraft, Helvetica;
 
 body {
-  font-family: RobotoDraft, Helvetica;
+  font-family: $font;
   background-color: #eee;
 }
 h1 {
   font-weight: 300;
 }
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+button {
+  background: transparent;
+  border: none;
+  padding: 0px;
+  outline: none;
+  font-family: $font;
+}
+
 a.inline {
   transition: all 0.2s;
   display: inline-block;
@@ -23,7 +37,7 @@ a.inline {
   }
 }
 .sidebar {
-  width: calc(50% - 240px + 64px);
+  width: calc(50% - 240px + 72px);
 }
 
 #background {
@@ -35,6 +49,7 @@ a.inline {
   right: 0px;
   :first-child {
     background-color: $accent;
+    box-shadow: -8px 0px 0px 0px rgba(0,0,0,0.2) inset;
   }
 }
 
@@ -42,6 +57,7 @@ a.inline {
   position: relative;
   width: 480px;
   flex-shrink: 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
   .month, .year {
     text-transform: uppercase;
     font-size: 10px;
@@ -51,7 +67,7 @@ a.inline {
     font-size: 21px;
   }
   .side {
-    width: 64px;
+    width: 72px;
     text-align: right;
     padding: 16px;
     box-sizing: border-box;
@@ -67,6 +83,34 @@ a.inline {
       margin-top: 0px;
     }
   }
+  #now {
+    margin-top: 32px;
+  }
+}
+
+.butthurt-list {
+  padding-bottom: 48px;
+}
+
+#controls {
+  position: fixed;
+  bottom: 0px;
+  height: 48px;
+  width: 100%;
+  background-color: #55082E;
+  .control-container {
+    width: 480px;
+  }
+  .control {
+    height: 48px;
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(white, 0.1);
+    }
+  }
 }
 
 @media(max-width: 640px){
@@ -74,6 +118,9 @@ a.inline {
     width: 100%;
   }
   .sidebar {
-    width: 56px;
+    width: 72px;
+  }
+  #controls .control-container {
+    width: 100%;
   }
 }
