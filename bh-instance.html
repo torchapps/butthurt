@@ -8,14 +8,15 @@
     <style>
       :host {
         position: relative;
-        padding: 16px 0px;
+        /*padding: 16px 0px;*/
         z-index: 1;
         flex-shrink: 0;
         -webkit-flex-shrink: 0;
+        border-top: 1px dashed #870E49;
       }
       bh-date-circle {
         transition: all 0.2s;
-        margin-right: 8px;
+        /*margin-right: 8px;*/
       }
       .month, .year {
         text-transform: uppercase;
@@ -46,18 +47,7 @@
       a.section:hover {
         background-color: #eee;
       }
-      .line {
-        position: absolute;
-        z-index: -1;
-        top: 0px;
-        bottom: -20px;
-        left: 28px;
-        width: 2px;
-        background-color: #870E49;
-      }
     </style>
-
-    <div class="line"></div>
 
     <bh-date-circle class="{{selected ? 'large' : ''}}">
       <div class="month">{{getMonth(date)}}</div>
@@ -65,7 +55,7 @@
       <div class="year">{{getYear(date)}}</div>
     </bh-date-circle>
 
-    <div class="card" flex one target="_blank">
+    <div flex one target="_blank">
       <div class="section">
         {{desc}}
       </div>

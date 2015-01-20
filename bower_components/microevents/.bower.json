@@ -1,0 +1,14 @@
+{
+  "name": "microevents",
+  "homepage": "https://github.com/jeromeetienne/microevent.js",
+  "_release": "75a0b6f92d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "75a0b6f92dc97bd37f753558c3fbfdacb61a79fc"
+  },
+  "_source": "git://github.com/jeromeetienne/microevent.js.git",
+  "_target": "*",
+  "_originalSource": "microevents",
+  "_direct": true
+}

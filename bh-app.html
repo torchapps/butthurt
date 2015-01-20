@@ -56,13 +56,12 @@
         width: 80px;
         margin-right: -8px;
         margin-left: -8px;
-        color: #870E49;
       }
       .container h1 {
         font-weight: 300;
         margin: 0;
       }
-      .container .line {
+/*      .container .line {
         position: absolute;
         z-index: -1;
         top: 96px;
@@ -70,6 +69,32 @@
         left: 32px;
         width: 2px;
         background-color: #870E49;
+      }*/
+      #background {
+        background-color: #eee;
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+      }
+      #background :first-child {
+        background-color: #870E49;
+      }
+      .butthurt-container {
+        position: relative;
+        width: 384px;
+      }
+      .sidebar {
+        width: calc(50% - 192px + 56px - 8px);
+      }
+      @media(max-width: 640px){
+        .butthurt-container {
+          width: 100%;
+        }
+        .sidebar {
+          width: 56px;
+        }
       }
     </style>
 
@@ -82,6 +107,11 @@
     loading="{{loadingData}}"
     ></core-ajax>
 
+    <div id="background" horizontal layout>
+      <div class="sidebar"></div>
+      <div flex></div>
+    </div>
+
 <!--       <div fit vertical layout center center-justified>
         <paper-spinner active="{{loadingData}}"></paper-spinner>
       </div>
@@ -91,7 +121,7 @@
         <core-toolbar style="display: none;">
         </core-toolbar>
         <div fit layout vertical center>
-          <div style="position: relative; width: 384px" layout vertical>
+          <div class="butthurt-container" layout vertical>
             
             <div class="container" horizontal layout flex-start>
               <bh-date-circle class="outline">
@@ -109,7 +139,6 @@
                   Made by <a class="inline" href="https://torchapps.github.io/">Torch</a>
                 </p>
               </div>
-              <div class="line"></div>
             </div>
             <core-selector id="list" layout vertical selected="{{selectedInstance}}" on-core-select="{{selectionChangedHandler}}" selectedProperty="selected">
               <template repeat="{{instance in buttList}}">
@@ -124,6 +153,7 @@
           </div>
         </div>
       </core-header-panel>
+
       <div id="pagecontrols" horizontal layout center-justified>
         <paper-icon-button icon="av:fast-rewind" on-tap="{{firstHandler}}"></paper-icon-button>
         <paper-icon-button icon="hardware:keyboard-arrow-up" on-tap="{{prevHandler}}"></paper-icon-button>
