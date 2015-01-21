@@ -19,7 +19,7 @@ var App = React.createClass({
       var results = _.chain(raw.data)
         // remove blank entries. stopgap.
         .filter(function(d){
-          return d.length >= 4;
+          return d.length >= 3;
         })
         // convert to proper form.
         .map(function (r){
