@@ -142,6 +142,22 @@ var App = React.createClass({
     });
     return (
       <div>
+        <div id="donate">
+          <form target="_blank" id="donate" action="https://www.paypal.com/cgi-bin/webscr" method="post" class="ng-pristine ng-valid">
+            <input type="hidden" name="cmd" value="_s-xclick"/>
+            <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+              "/>
+            <button type="submit" class="clearfix">
+              <div>
+                <small>Support us</small>
+              </div>
+              <div>
+                &#x2605; Donate! &#x2605;
+              </div>
+            </button>
+            <img class="go-away" alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"/>
+          </form>
+        </div>
         <div id="background" className="horizontal layout">
           <div className="sidebar"></div>
           <div className="flex"></div>
@@ -162,15 +178,6 @@ var App = React.createClass({
               <p>
                 Made by <a className="inline" href="https://torchapps.github.io/">Torch</a>
               </p>
-              <form target="_blank" id="donate" action="https://www.paypal.com/cgi-bin/webscr" method="post" class="ng-pristine ng-valid">
-                <input type="hidden" name="cmd" value="_s-xclick"/>
-                <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
-                  "/>
-                <button type="submit" class="clearfix">
-                    Donate
-                </button>
-                <img class="go-away" alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"/>
-              </form>
             </div>
           </div>
           {butthurtList}
