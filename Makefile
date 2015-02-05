@@ -9,7 +9,7 @@ deps:
 development: clean deps
 	./node_modules/.bin/webpack-dev-server --inline --hot --content-base .
 
-github: development
+github: clean deps
 	git checkout gh-pages
 	rm -rf img/
 	mv build/* .
