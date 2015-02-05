@@ -98,14 +98,22 @@ a.inline {
   z-index: 10; }
 
 #donate button {
+  -webkit-transform: rotateZ(-45deg) translateX(-50%);
+  -moz-transform: rotateZ(-45deg) translateX(-50%);
+  -ms-transform: rotateZ(-45deg) translateX(-50%);
+  -o-transform: rotateZ(-45deg) translateX(-50%);
+  transform: rotateZ(-45deg) translateX(-50%);
+  -webkit-transform-origin: top left;
+  -moz-transform-origin: top left;
+  -ms-transform-origin: top left;
+  -o-transform-origin: top left;
+  transform-origin: top left;
   transition: all 0.2s;
   background-color: #FF851B;
   border: 0px;
   display: block;
   height: 90px;
   width: 178px;
-  transform: rotateZ(-45deg) translateX(-50%);
-  transform-origin: top left;
   outline: none;
   padding: 0px;
   padding-top: 27px;
