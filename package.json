@@ -1,0 +1,30 @@
+{
+  "name": "butthurt",
+  "version": "1.0.0",
+  "description": "Butthurt is a tribute to Filipino (over)sensitivities, and nothing more.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/torchapps/butthurt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/torchapps/butthurt/issues"
+  },
+  "homepage": "https://github.com/torchapps/butthurt",
+  "devDependencies": {
+    "jsx-loader": "^0.12.2",
+    "webpack": "^1.5.3"
+  },
+  "dependencies": {
+    "css-loader": "^0.9.1",
+    "node-bourbon": "^1.2.3",
+    "react": "^0.12.2",
+    "sass-loader": "^0.4.0-beta.1",
+    "style-loader": "^0.8.3"
+  }
+}
