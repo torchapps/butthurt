@@ -11,9 +11,6 @@ development: clean deps
 
 github: clean deps
 	git checkout gh-pages
-	rm -rf img/
-	mv build/* .
-	rmdir build
 	git add .
 	git commit -m "updated"
 	git push origin gh-pages
