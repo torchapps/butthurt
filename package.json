@@ -18,7 +18,8 @@
   "homepage": "https://github.com/torchapps/butthurt",
   "devDependencies": {
     "jsx-loader": "^0.12.2",
-    "webpack": "^1.5.3"
+    "webpack": "^1.5.3",
+    "webpack-dev-server": "^1.7.0"
   },
   "dependencies": {
     "css-loader": "^0.9.1",
