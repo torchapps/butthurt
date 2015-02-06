@@ -1,6 +1,7 @@
 @import "bourbon";
 
 $accent: #870E49;
+$contrast: #FF851B;
 $font: RobotoDraft, Helvetica;
 
 body {
@@ -21,6 +22,78 @@ button {
   padding: 0px;
   outline: none;
   font-family: $font;
+}
+#donate {
+  button {
+    transition: all 0.2s;
+    cursor: pointer;
+    color: $accent;
+    background-color: $contrast;
+    font-family: $font;
+    height: 40px;
+    font-size: 16px;
+    padding: 0px 16px;
+    margin: 0px 8px;
+    border-radius: 2px;
+    &:hover {
+      background-color: lighten($contrast, 5%);
+    }
+    &:active {
+      box-shadow: 0px 2px 16px rgba(black, 0.2) inset;
+    }
+  }
+}
+.IconButton {
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 40px;
+  width: 40px;
+  color: white;
+  display: inline-block;
+  @include transition(all 0.2s);
+  &:active {
+    background-color: rgba(white, 0.2);
+    color: $contrast;
+  }
+  &.selected {
+    background-color: rgba(black, 0.2);
+    color: $contrast;
+  }
+  i {
+    height: 24px;
+    width: 24px;
+    font-size: 24px;
+    display: inline-block;
+  }
+  @media (min-device-width: 601px) {
+    &:hover {
+      background-color: rgba(white, 0.1);
+    }
+  }
+}
+
+.toolbar {
+  position: fixed;
+  height: 64px;
+  background-color: $accent;
+  box-shadow: 0px 8px 8px rgba(black, 0.2);
+  color: white;
+  z-index: 20;
+  width: 100%;
+  padding: 0px 8px;
+  box-sizing: border-box;
+  @include display(flex);
+  @include align-items(center);
+  .spacer {
+    @include flex(1);
+  }
+  div {
+    font-size: 21px;
+    font-weight: 300;
+    padding: 0px 8px;
+  }
 }
 
 a.inline {
@@ -91,6 +164,7 @@ a.inline {
 }
 
 .butthurt-list {
+  padding-top: 64px;
   padding-bottom: 48px;
 }
 
@@ -113,33 +187,6 @@ a.inline {
       background-color: rgba(white, 0.1);
     }
   }
-}
-
-#donate {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 10;
-}
-#donate button {
-  @include transform(rotateZ(-45deg) translateX(-50%));
-  @include transform-origin(top left);
-  transition: all 0.2s;
-  background-color: #FF851B;
-  border: 0px;
-  display: block;
-  height: 90px;
-  width: 178px;
-  outline: none;
-  padding: 0px;
-  padding-top: 27px;
-  font-size: 18px;
-  cursor: pointer;
-  font-family: RobotoDraft;
-  color: #85144B;
-}
-#donate button:hover {
-  background-color: #FFDC00;
 }
 
 @media(max-width: 640px){
