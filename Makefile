@@ -9,7 +9,10 @@ deps:
 development: clean deps
 	./node_modules/.bin/webpack-dev-server --inline --hot --content-base .
 
-github: clean deps
+production: clean deps
+	webpack
+
+github: production
 	git checkout gh-pages
 	git add .
 	git commit -m "updated"
