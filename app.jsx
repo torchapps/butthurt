@@ -1,5 +1,6 @@
 require("./styles/scss/style.scss");
 var React = require("react");
+var Butthurt = require("./Butthurt.jsx");
 
 var bh = {
   arrowKeys: {
@@ -115,33 +116,9 @@ var App = React.createClass({
   render: function(){
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var daysSince = moment().diff(this.latestDate(this.state.butthurts), 'days');
-    var getStyle = function(interval) {
-      return {
-        'minHeight': interval * 20 + "px"
-      }
-    }.bind(this);
+    
     var butthurtList = this.state.butthurts.map(function(butthurt, index){
-      return (
-        <div key={index} className="butthurt-container selectable horizontal layout" style={getStyle(butthurt.interval)}>
-          <div className="side">
-            <div className="month">
-              {butthurt.date.format("MMM")}
-            </div>
-            <div className="day">
-              {butthurt.date.format("DD")}
-            </div>
-            <div className="year">
-              {butthurt.date.format("YYYY")}
-            </div>
-          </div>
-          <div className="main flex">
-            <p>
-              {butthurt.desc}
-            </p>
-            <a className="inline" href={butthurt.src}>Source</a>
-          </div>
-        </div>
-      )
+      return <Butthurt key={ index } data={ butthurt} />
     });
     return (
       <div>
