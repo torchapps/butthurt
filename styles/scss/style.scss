@@ -1,6 +1,7 @@
 @import "bourbon";
 
 $accent: #870E49;
+$accentDark: #55082E;
 $contrast: #FF851B;
 $font: RobotoDraft, Helvetica;
 
@@ -123,7 +124,7 @@ a.inline {
   left: 0px;
   right: 0px;
   :first-child {
-    background-color: $accent;
+    background-color: $accentDark;
     box-shadow: -8px 0px 0px 0px rgba(0,0,0,0.2) inset;
   }
 }
@@ -174,7 +175,8 @@ a.inline {
   bottom: 0px;
   height: 48px;
   width: 100%;
-  background-color: #55082E;
+  background-color: $accent;
+  box-shadow: 0px -4px 4px rgba(black, 0.1);
   .control-container {
     width: 480px;
   }
