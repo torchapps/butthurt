@@ -49,7 +49,7 @@ var App = React.createClass({
     window.onkeydown = this.keyHandler;
   },
   findButthurtNodeFromScroll: function(){
-    var y = $("body,html").scrollTop() || $("body").scrollTop(); // because fuck firefox;
+    var y = ($("body,html").scrollTop() || $("body").scrollTop()) + 64; // because fuck firefox;
     var butthurtNodes = document.querySelectorAll('.selectable');
 
     var foundIndex = Math.max(
@@ -104,7 +104,7 @@ var App = React.createClass({
     }.bind(this), 0);
   },
   animateScroll: function(loc){
-    $("body,html").animate({ scrollTop: loc + "px" });
+    $("body,html").animate({ scrollTop: loc - 64 + "px" });
   },
   animateToButthurt: function(butthurt){
     this.animateScroll(butthurt.offsetTop);
