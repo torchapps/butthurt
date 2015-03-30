@@ -91,6 +91,40 @@ a.inline {
     #controls .control:hover {
       background-color: rgba(255, 255, 255, 0.1); }
 
+#donate {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 10; }
+
+#donate button {
+  -webkit-transform: rotateZ(-45deg) translateX(-50%);
+  -moz-transform: rotateZ(-45deg) translateX(-50%);
+  -ms-transform: rotateZ(-45deg) translateX(-50%);
+  -o-transform: rotateZ(-45deg) translateX(-50%);
+  transform: rotateZ(-45deg) translateX(-50%);
+  -webkit-transform-origin: top left;
+  -moz-transform-origin: top left;
+  -ms-transform-origin: top left;
+  -o-transform-origin: top left;
+  transform-origin: top left;
+  transition: all 0.2s;
+  background-color: #FF851B;
+  border: 0px;
+  display: block;
+  height: 90px;
+  width: 178px;
+  outline: none;
+  padding: 0px;
+  padding-top: 27px;
+  font-size: 18px;
+  cursor: pointer;
+  font-family: RobotoDraft;
+  color: #85144B; }
+
+#donate button:hover {
+  background-color: #FFDC00; }
+
 @media (max-width: 640px) {
   .butthurt-container {
     width: 100%; }
