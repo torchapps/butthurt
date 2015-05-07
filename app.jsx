@@ -153,7 +153,7 @@ var App = React.createClass({
               <h3 id="now">Now</h3>
             </div>
             <div className="main flex">
-              <h1>{daysSince} Days since last butthurt</h1>
+              <h1>{daysSince} day{daysSince > 1 ? 's' : ''} since last butthurt</h1>
               <p>
                 Butthurt is a tribute to Filipino (over)sensitivities, and nothing more.
               </p>
